@@ -1,0 +1,34 @@
+{
+  "name": "borodulin/yii2-camunda",
+  "description": "The Camunda Rest API extension for the Yii2 framework",
+  "keywords": ["yii2", "camunda", "bpmn", "rest", "api"],
+  "homepage": "https://github.com/borodulin/yii2-camunda",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/borodulin/yii2-camunda/issues",
+    "source": "https://github.com/borodulin/yii2-camunda"
+  },
+  "authors": [
+    {
+      "name": "Andrey Borodulin",
+      "email": "borodulin@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "yiisoft/yii2": ">=2.0.4",
+    "yiisoft/yii2-httpclient": ">=2.0.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "borodulin\\camunda\\": ""
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.0-dev"
+    }
+  }
+}
