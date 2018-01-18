@@ -1,21 +1,13 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
-
-class ProcessInstance
+/**
+ * Class ProcessInstance
+ * @package borodulin\camunda
+ */
+class ProcessInstance extends Module
 {
-
-    /**
-     * @var CamundaApi
-     */
-    private $api;
-
-    public function __construct(CamundaApi $api)
-    {
-        $this->api = $api;
-    }
-
     /**
      * Delete
      * DELETE /process-instance/{id}

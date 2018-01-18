@@ -1,20 +1,13 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
-
-class ProcessVariables
+/**
+ * Class ProcessVariables
+ * @package borodulin\camunda
+ */
+class ProcessVariables extends Module
 {
-    /**
-     * @var CamundaApi
-     */
-    private $api;
-
-    public function __construct(CamundaApi $api)
-    {
-        $this->api = $api;
-    }
-
     /**
      * Delete
      * DELETE /process-instance/{id}/variables/{varId}

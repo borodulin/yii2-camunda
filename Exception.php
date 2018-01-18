@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
 use yii\base\UserException;
 use yii\helpers\ArrayHelper;

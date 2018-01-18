@@ -1,20 +1,10 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
 
-class ProcessDefinition
+class ProcessDefinition extends Module
 {
-    /**
-     * @var CamundaApi
-     */
-    private $api;
-
-    public function __construct(CamundaApi $api)
-    {
-        $this->api = $api;
-    }
-
     /**
      * Get Activity Instance Statistics
      * GET /process-definition/{id}/statistics

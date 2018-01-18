@@ -1,21 +1,11 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
 use yii\helpers\ArrayHelper;
 
-class Deployment
+class Deployment extends Module
 {
-    /**
-     * @var CamundaApi
-     */
-    private $api;
-
-    public function __construct(CamundaApi $api)
-    {
-        $this->api = $api;
-    }
-
     /**
      * Query Parameters
      * Name    Description

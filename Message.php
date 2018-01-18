@@ -1,22 +1,12 @@
 <?php
 
-namespace common\components\camunda;
+namespace borodulin\camunda;
 
 
 use yii\helpers\Json;
 
-class Message
+class Message extends Module
 {
-    /**
-     * @var CamundaApi
-     */
-    private $api;
-
-    public function __construct(CamundaApi $api)
-    {
-        $this->api = $api;
-    }
-
     /**
      * @param $name
      * @param $variables
