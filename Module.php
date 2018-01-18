@@ -1,11 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: borodulin
- * Date: 18.01.18
- * Time: 13:47
+ * @link https://github.com/borodulin/yii2-camunda
+ * @copyright Copyright (c) 2018 Andrey Borodulin
+ * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
  */
-
 namespace borodulin\camunda;
 
 use Yii;
@@ -31,11 +29,10 @@ abstract class Module
     {
         if ($this->api = Yii::$app->get('camunda', false)) {
             if (!$this->api instanceof CamundaApi) {
-                throw new InvalidConfigException('Camunda should be instance of CamundaApi');
+                throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
             }
         } else {
             $this->api = Yii::createObject(CamundaApi::className());
         }
     }
-
 }
