@@ -16,7 +16,7 @@ before_install:
   - docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
 
 install:
-  - composer update
+  - composer install
 
 script:
   - php vendor/bin/codecept run
