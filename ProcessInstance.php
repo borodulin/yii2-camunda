@@ -6,6 +6,8 @@
  */
 namespace borodulin\camunda;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * Class ProcessInstance
  * @package borodulin\camunda
@@ -18,10 +20,11 @@ class ProcessInstance extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function delete($id)
     {
-        return $this->api
+        return $this->getApi()
             ->methodDelete()
             ->execute("process-instance/$id");
     }
@@ -32,10 +35,11 @@ class ProcessInstance extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getActivity($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance/$id/activity-instances");
     }
 
@@ -46,11 +50,13 @@ class ProcessInstance extends Module
      * @param array $params
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getListCount($params = [])
     {
-        return $this->api
+        $result = $this->getApi()
             ->execute("process-instance/count", $params);
+        return ArrayHelper::getValue($result, 'count');
     }
 
     /**
@@ -59,10 +65,11 @@ class ProcessInstance extends Module
      * @param array $params
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getList($params = [])
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance", $params);
     }
 
@@ -72,10 +79,11 @@ class ProcessInstance extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getInstance($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance/$id");
     }
 
@@ -85,10 +93,11 @@ class ProcessInstance extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function modify($id)
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-instance/$id/modification");
     }
@@ -98,10 +107,11 @@ class ProcessInstance extends Module
      * POST /process-instance/count
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getListCountFiltered()
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-instance/count");
     }
@@ -111,10 +121,11 @@ class ProcessInstance extends Module
      * POST /process-instance
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getListFiltered()
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-instance");
     }
@@ -126,10 +137,11 @@ class ProcessInstance extends Module
      * @param $suspended
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function suspendedById($id, $suspended)
     {
-        return $this->api
+        return $this->getApi()
             ->postJson(['suspended' => $suspended ? 'true' : 'false'])
             ->methodPut()
             ->execute("process-instance/$id/suspended");
@@ -139,20 +151,21 @@ class ProcessInstance extends Module
     // PUT /process-instance/suspended
     // Activate/Suspend By Process Definition Key
     // PUT /process-instance/suspended
-    
+
     /**
      * Get Process Variables
      * GET /process-instance/{id}/variables
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getVriables($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance/$id/variables");
     }
-    
+
     /**
      * Put Single Process Variable
      * PUT /process-instance/{id}/variables/{varId}
@@ -162,11 +175,12 @@ class ProcessInstance extends Module
      * @param null $type
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function putVariable($id, $varId, $value, $type = null)
     {
         $type = is_null($type) ? gettype($value) : $type;
-        return $this->api
+        return $this->getApi()
             ->postJson([
                 'value' => $value,
                 'type' => $type,
@@ -174,6 +188,4 @@ class ProcessInstance extends Module
             ->methodPut()
             ->execute("process-instance/$id/variables/$varId");
     }
-    
-    
 }

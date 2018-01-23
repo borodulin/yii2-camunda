@@ -5,6 +5,7 @@
  * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
  */
 namespace borodulin\camunda;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ProcessDefinition
@@ -18,10 +19,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStatisticsById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/statistics");
     }
 
@@ -30,10 +32,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStatisticsByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/statistics");
     }
 
@@ -43,10 +46,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDiagramById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/diagram");
     }
 
@@ -55,10 +59,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDiagramByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/diagram");
     }
 
@@ -68,10 +73,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStartFormVariablesById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/form-variables");
     }
 
@@ -80,23 +86,27 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStartFormVariablesByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/form-variables");
     }
 
     /**
      * Get List Count
      * GET /process-definition/count
+     * @param array $query
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getListCount()
+    public function getListCount($query = [])
     {
-        return $this->api
-            ->execute("process-definition/count");
+        $result = $this->getApi()
+            ->execute("process-definition/count", $query);
+        return ArrayHelper::getValue($result, 'count');
     }
 
     /**
@@ -105,6 +115,7 @@ class ProcessDefinition extends Module
      * @param array $query
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getList($query = [])
     {
@@ -112,7 +123,7 @@ class ProcessDefinition extends Module
         if (!empty($query)) {
             $uri .= '?' . http_build_query($query);
         }
-        return $this->api
+        return $this->getApi()
             ->execute($uri);
     }
 
@@ -122,10 +133,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getRenderedStartFormById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/rendered-form");
     }
 
@@ -134,10 +146,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getRenderedStartFormByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/rendered-form");
     }
 
@@ -147,10 +160,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStartFormKeyById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/startForm");
     }
 
@@ -159,10 +173,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getStartFormKeyByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/startForm");
     }
 
@@ -171,10 +186,11 @@ class ProcessDefinition extends Module
      * GET /process-definition/statistics
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getProcessInstanceStatistics()
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/statistics");
     }
 
@@ -184,10 +200,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getXmlById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id/xml");
     }
 
@@ -196,10 +213,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getXmlByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key/xml");
     }
 
@@ -209,10 +227,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDefinitionById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/$id");
     }
 
@@ -221,10 +240,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDefinitionByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-definition/key/$key");
     }
 
@@ -232,13 +252,14 @@ class ProcessDefinition extends Module
      * Start Instance
      * POST /process-definition/{id}/start
      * @param $id
-     * @param $json
+     * @param string $json
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function startInstanceById($id, $json = [])
+    public function startInstanceById($id, $json = '{}')
     {
-        return $this->api
+        return $this->getApi()
             ->postJson($json)
             ->execute("process-definition/$id/start");
     }
@@ -249,10 +270,11 @@ class ProcessDefinition extends Module
      * @param $json
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function startInstanceByKey($key, $json)
     {
-        return $this->api
+        return $this->getApi()
             ->postJson($json)
             ->execute("process-definition/key/$key/start");
     }
@@ -263,10 +285,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function submitStartFormById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-definition/$id/submit-form");
     }
@@ -276,10 +299,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function submitStartFormByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-definition/key/$key/submit-form");
     }
@@ -290,10 +314,11 @@ class ProcessDefinition extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function suspendedById($id)
     {
-        return $this->api
+        return $this->getApi()
             ->methodPut()
             ->execute("process-definition/$id/suspended");
     }
@@ -303,10 +328,11 @@ class ProcessDefinition extends Module
      * @param $key
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function suspendedByKey($key)
     {
-        return $this->api
+        return $this->getApi()
             ->methodPut()
             ->execute("process-definition/key/$key/suspended");
     }

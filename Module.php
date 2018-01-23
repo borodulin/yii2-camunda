@@ -17,22 +17,31 @@ use yii\base\InvalidConfigException;
 abstract class Module
 {
     /**
-     * @var CamundaApi
-     */
-    protected $api;
-
-    /**
-     * Module constructor.
+     * @return CamundaApi
      * @throws InvalidConfigException
      */
-    public function __construct()
+    protected function getApi()
     {
-        if ($this->api = Yii::$app->get('camunda', false)) {
-            if (!$this->api instanceof CamundaApi) {
+        /** @var CamundaApi $api */
+        if ($api = Yii::$app->get('camunda', false)) {
+            if (!$api instanceof CamundaApi) {
                 throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
             }
         } else {
-            $this->api = Yii::createObject(CamundaApi::className());
+            $api = Yii::createObject(CamundaApi::className());
         }
+        return $api;
+    }
+
+    public function translateVariables($variables)
+    {
+        $result = [];
+        foreach ($variables as $key => $value) {
+            $result[$key] = ['value' => $value, 'type' => gettype($value)];
+        }
+        if (empty($result)) {
+            return null;
+        }
+        return $result;
     }
 }

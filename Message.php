@@ -15,12 +15,13 @@ class Message extends Module
      * @param $variables
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function messageAll($name, $variables)
     {
-        return $this->api->postJson(Json::encode([
+        return $this->getApi()->postJson(Json::encode([
             'messageName' => $name,
-            'processVariables' => $this->api->translateVariables($variables),
+            'processVariables' => $this->translateVariables($variables),
             'all' => true,
         ]))->execute('message');
     }
@@ -31,13 +32,14 @@ class Message extends Module
      * @param $variables
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function messageOne($name, $businessKey, $variables)
     {
-        return $this->api->postJson(Json::encode([
+        return $this->getApi()->postJson(Json::encode([
             'messageName' => $name,
             'businessKey' => $businessKey,
-            'processVariables' => $this->api->translateVariables($variables)
+            'processVariables' => $this->translateVariables($variables)
         ]))->execute('message');
     }
 }

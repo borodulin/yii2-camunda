@@ -19,10 +19,11 @@ class ProcessVariables extends Module
      * @param $varId
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function delete($id, $varId)
     {
-        return $this->api
+        return $this->getApi()
             ->methodDelete()
             ->execute("process-instance/$id/variables/$varId");
     }
@@ -34,10 +35,11 @@ class ProcessVariables extends Module
      * @param $varId
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getValueBinary($id, $varId)
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-instance/$id/variables/$varId/data");
     }
@@ -49,10 +51,11 @@ class ProcessVariables extends Module
      * @param $varId
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getValue($id, $varId)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance/$id/variables/$varId");
     }
 
@@ -62,10 +65,11 @@ class ProcessVariables extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getList($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("process-instance/$id/variables");
     }
 
@@ -77,10 +81,11 @@ class ProcessVariables extends Module
      * @param $id
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function modify($id)
     {
-        return $this->api
+        return $this->getApi()
             ->setPostData()
             ->execute("process-instance/$id/variables");
     }
@@ -92,10 +97,11 @@ class ProcessVariables extends Module
      * @param $varId
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function update($id, $varId)
     {
-        return $this->api
+        return $this->getApi()
             ->methodPut()
             ->execute("process-instance/$id/variables/$varId");
     }

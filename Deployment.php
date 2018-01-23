@@ -29,10 +29,11 @@ class Deployment extends Module
      * @param array $params
      * @return array
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDeployments($params = [])
     {
-        return $this->api
+        return $this->getApi()
             ->execute('deployment', $params);
     }
 
@@ -41,10 +42,11 @@ class Deployment extends Module
      * @param array $params
      * @return integer
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDeploymentsCount($params = [])
     {
-        $result = $this->api
+        $result = $this->getApi()
             ->execute('deployment/count', $params);
         return ArrayHelper::getValue($result, 'count');
     }
@@ -53,10 +55,11 @@ class Deployment extends Module
      * @param string $id The id of the deployment
      * @return array
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDeployment($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute('deployment/' . $id);
     }
 
@@ -66,10 +69,11 @@ class Deployment extends Module
      * @param boolean $skipCustomListeners
      * @return mixed
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function deleteDeployment($id, $cascade = true, $skipCustomListeners = false)
     {
-        return $this->api
+        return $this->getApi()
             ->methodDelete()
             ->execute('deployment/' . $id, [
                 'cascade' => $cascade ? 'true' : 'false',
@@ -81,10 +85,11 @@ class Deployment extends Module
      * @param string $id The id of the deployment to retrieve the deployment resources for.
      * @return array
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getDeploymentResources($id)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("deployment/$id/resources");
     }
 
@@ -93,10 +98,11 @@ class Deployment extends Module
      * @param string $resourceId The id of the deployment resource.
      * @return array
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getResource($id, $resourceId)
     {
-        return $this->api
+        return $this->getApi()
             ->execute("deployment/$id/resources/$resourceId");
     }
 
@@ -107,10 +113,12 @@ class Deployment extends Module
      * @param boolean $deployChangedOnly A flag indicating whether the process engine should perform duplicate checking on a per-resource basis. If set to true, only those resources that have actually changed are deployed. Checks are made against resources included previous deployments of the same name and only against the latest versions of those resources. If set to true, the option enable-duplicate-filtering is overridden and set to true.
      * @return array
      * @throws Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function create($deploymentName, $filename, $enableDuplicateFiltering = false, $deployChangedOnly = false)
     {
-        $this->api->request
+        $api = $this->getApi();
+        $api->request
             ->setMethod('POST')
             ->addFile($deploymentName, $filename)
             ->setData([
@@ -118,7 +126,7 @@ class Deployment extends Module
                 'enable-duplicate-filtering' => $enableDuplicateFiltering ? 'true' : 'false',
                 'deploy-changed-only' => $deployChangedOnly ? 'true' : 'false',
             ]);
-        return $this->api
+        return $api
             ->execute("deployment/create");
 
     }

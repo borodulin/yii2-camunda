@@ -38,15 +38,6 @@ class CamundaApi extends Component
         return $this->_request;
     }
 
-    public function translateVariables($variables)
-    {
-        $result = [];
-        foreach ($variables as $key => $value) {
-            $result[$key] = ['value' => $value, 'type' => gettype($value)];
-        }
-        return $result;
-    }
-
     /**
      *
      * @param string|array $json
