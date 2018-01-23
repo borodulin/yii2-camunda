@@ -4,29 +4,13 @@
     <bpmn:startEvent id="StartEvent_1" camunda:asyncBefore="true">
       <bpmn:outgoing>SequenceFlow_0n31he5</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0n31he5" sourceRef="StartEvent_1" targetRef="Task_0n35108" />
-    <bpmn:serviceTask id="Task_0n35108" name="Погода в Перми">
-      <bpmn:extensionElements>
-        <camunda:connector>
-          <camunda:inputOutput>
-            <camunda:inputParameter name="url"><![CDATA[http://api.openweathermap.org/data/2.5/weather?lat=58.005180&lon=56.239354&appid=cae36453dee8e12224bc1b2c4b5d1f71&units=metric]]></camunda:inputParameter>
-            <camunda:inputParameter name="method">GET</camunda:inputParameter>
-            <camunda:outputParameter name="response">${response}</camunda:outputParameter>
-            <camunda:outputParameter name="temperature"><![CDATA[${S(response).jsonPath('$.main.temp').numberValue()}]]></camunda:outputParameter>
-          </camunda:inputOutput>
-          <camunda:connectorId>http-connector</camunda:connectorId>
-        </camunda:connector>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0n31he5</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_16kn38s</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0n31he5" sourceRef="StartEvent_1" targetRef="Task_07klq3h" />
     <bpmn:endEvent id="EndEvent_00t78yl">
       <bpmn:incoming>SequenceFlow_11rmx1d</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_16kn38s" sourceRef="Task_0n35108" targetRef="Task_07klq3h" />
     <bpmn:sequenceFlow id="SequenceFlow_11rmx1d" sourceRef="Task_07klq3h" targetRef="EndEvent_00t78yl" />
     <bpmn:userTask id="Task_07klq3h">
-      <bpmn:incoming>SequenceFlow_16kn38s</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0n31he5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_11rmx1d</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
@@ -34,40 +18,33 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="demo1">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <dc:Bounds x="218" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="191" y="138" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0n31he5_di" bpmnElement="SequenceFlow_0n31he5">
-        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="343" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="254" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="480" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="276" y="99" width="0" height="12" />
+          <dc:Bounds x="322" y="99" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_1pluor7_di" bpmnElement="Task_0n35108">
-        <dc:Bounds x="343" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_00t78yl_di" bpmnElement="EndEvent_00t78yl">
-        <dc:Bounds x="982" y="102" width="36" height="36" />
+        <dc:Bounds x="794" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="955" y="142" width="90" height="12" />
+          <dc:Bounds x="767" y="142" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_16kn38s_di" bpmnElement="SequenceFlow_16kn38s">
-        <di:waypoint xsi:type="dc:Point" x="443" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="644" y="120" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="498.5" y="99" width="90" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_11rmx1d_di" bpmnElement="SequenceFlow_11rmx1d">
-        <di:waypoint xsi:type="dc:Point" x="744" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="982" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="580" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="794" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="863" y="99" width="0" height="12" />
+          <dc:Bounds x="642" y="99" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_0s0f8gj_di" bpmnElement="Task_07klq3h">
-        <dc:Bounds x="644" y="80" width="100" height="80" />
+        <dc:Bounds x="480" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

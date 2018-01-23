@@ -236,7 +236,7 @@ class ProcessDefinition extends Module
      * @return mixed
      * @throws Exception
      */
-    public function startInstanceById($id, $json)
+    public function startInstanceById($id, $json = [])
     {
         return $this->api
             ->postJson($json)
