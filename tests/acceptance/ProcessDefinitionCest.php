@@ -1,18 +1,37 @@
 <?php
 
 
-class ProcessDefinitionCest
+use borodulin\camunda\ProcessDefinition;
+
+class ProcessDefinitionCest extends ApiCest
 {
-    public function _before(AcceptanceTester $I)
+    /**
+     * @param ProcessDefinition $definition
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function listCount(ProcessDefinition $definition, AcceptanceTester $I)
     {
+        $I->assertEquals(0, $definition->getListCount());
+        $this->deploy('demo1');
+        $I->assertEquals(1, $definition->getListCount());
     }
 
-    public function _after(AcceptanceTester $I)
+    /**
+     * @param ProcessDefinition $definition
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function suspendByKey(ProcessDefinition $definition, AcceptanceTester $I)
     {
-    }
-
-    // tests
-    public function tryToTest(AcceptanceTester $I)
-    {
+        $this->start('demo2', '123');
+        $definition->suspendedByKey('demo2', true);
+        $result = $definition->getList();
+        $I->assertEquals(true, $result[0]['suspended']);
+        $definition->suspendedByKey('demo2', false);
+        $result = $definition->getList();
+        $I->assertEquals(false, $result[0]['suspended']);
     }
 }

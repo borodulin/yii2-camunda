@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "borodulin\\camunda\\": ""
+      "borodulin\\camunda\\": "src"
     }
   },
   "extra": {

@@ -6,8 +6,10 @@
  */
 namespace borodulin\camunda;
 
-use yii\helpers\Json;
-
+/**
+ * Class Message
+ * @package borodulin\camunda
+ */
 class Message extends Module
 {
     /**
@@ -17,13 +19,13 @@ class Message extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function messageAll($name, $variables)
+    public function messageAll($name, $variables = [])
     {
-        return $this->getApi()->postJson(Json::encode([
+        return $this->getApi()->postJson([
             'messageName' => $name,
             'processVariables' => $this->translateVariables($variables),
             'all' => true,
-        ]))->execute('message');
+        ])->execute('message');
     }
 
     /**
@@ -34,12 +36,25 @@ class Message extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function messageOne($name, $businessKey, $variables)
+    public function messageOne($name, $businessKey, $variables = [])
     {
-        return $this->getApi()->postJson(Json::encode([
+        return $this->getApi()->postJson([
             'messageName' => $name,
             'businessKey' => $businessKey,
-            'processVariables' => $this->translateVariables($variables)
-        ]))->execute('message');
+            'processVariables' => $this->translateVariables($variables),
+            'all' => false,
+        ])->execute('message');
+    }
+
+    /**
+     * @param $params
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function message($params)
+    {
+        return $this->getApi()->postJson($params)
+            ->execute('message');
     }
 }

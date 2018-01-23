@@ -5,6 +5,7 @@
  * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
  */
 namespace borodulin\camunda;
+use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -312,13 +313,21 @@ class ProcessDefinition extends Module
      * Activate/Suspend By Id
      * PUT /process-definition/{id}/suspended
      * @param $id
+     * @param $suspended
+     * @param bool $includeProcessInstances
+     * @param null $executionDate
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function suspendedById($id)
+    public function suspendedById($id, $suspended, $includeProcessInstances = true, $executionDate = null)
     {
         return $this->getApi()
+            ->postJson([
+                'suspended' => $suspended ? true : false,
+                'includeProcessInstances' => $includeProcessInstances ? true : false,
+                'executionDate' => $this->formatDate($executionDate),
+            ])
             ->methodPut()
             ->execute("process-definition/$id/suspended");
     }
@@ -326,17 +335,36 @@ class ProcessDefinition extends Module
     /**
      * PUT /process-definition/key/{key}/suspended (suspend latest version of process definition)
      * @param $key
+     * @param $suspended
+     * @param bool $includeProcessInstances
+     * @param null $executionDate
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function suspendedByKey($key)
+    public function suspendedByKey($key, $suspended, $includeProcessInstances = true, $executionDate = null)
     {
         return $this->getApi()
+            ->postJson([
+                'suspended' => $suspended ? true : false,
+                'includeProcessInstances' => $includeProcessInstances ? true : false,
+                'executionDate' => $this->formatDate($executionDate),
+            ])
             ->methodPut()
             ->execute("process-definition/key/$key/suspended");
     }
 
-    //Activate/Suspend By Key
-    //PUT /process-definition/suspended
+    protected function formatDate($date)
+    {
+        if (!is_null($date)) {
+            if (!is_numeric($date)) {
+                $date = strtotime($date);
+            }
+            if (!is_numeric($date)) {
+                throw new InvalidParamException('Execution date is invalid');
+            }
+            $date = date('c', $date);
+        }
+        return $date;
+    }
 }
