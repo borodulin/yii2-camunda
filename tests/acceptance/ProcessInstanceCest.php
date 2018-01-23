@@ -17,7 +17,7 @@ class ProcessInstanceCest extends ApiCest
     {
         $this->start('demo1', '123');
         $I->assertEquals(1, $instance->getListCount());
-        $instance->getList();
+        sleep(3);
         foreach ($instance->getList() as $item) {
             $instance->delete($item['id']);
         }
