@@ -103,7 +103,7 @@ class ProcessDefinition extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListCount($query = [])
+    public function getListCount($query = null)
     {
         $result = $this->getApi()
             ->execute("process-definition/count", $query);
@@ -113,19 +113,15 @@ class ProcessDefinition extends Module
     /**
      * Get List
      * GET /process-definition
-     * @param array $query
+     * @param $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getList($query = [])
+    public function getList($query = null)
     {
-        $uri = "process-definition";
-        if (!empty($query)) {
-            $uri .= '?' . http_build_query($query);
-        }
         return $this->getApi()
-            ->execute($uri);
+            ->execute("process-definition", $query);
     }
 
     /**

@@ -45,6 +45,20 @@ class ProcessInstanceCest extends ApiCest
         }
     }
 
-
+    /**
+     * @param ProcessInstance $instance
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function setVariable(ProcessInstance $instance, AcceptanceTester $I)
+    {
+        $this->start('demo4', '123');
+        $I->assertEquals(1, $instance->getListCount());
+        foreach ($instance->getList() as $item) {
+            $instance->updateVariable($item['id'], 'foo', 'bar');
+        }
+        $I->assertEquals(0, $instance->getListCount());
+    }
 
 }

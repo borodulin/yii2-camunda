@@ -1,7 +1,10 @@
 <?php
-
+/**
+ * @link https://github.com/borodulin/yii2-camunda
+ * @copyright Copyright (c) 2018 Andrey Borodulin
+ * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
+ */
 namespace borodulin\camunda\dto;
-
 
 /**
  * Class TaskQuery

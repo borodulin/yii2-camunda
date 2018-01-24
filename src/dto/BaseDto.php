@@ -1,11 +1,19 @@
 <?php
-
+/**
+ * @link https://github.com/borodulin/yii2-camunda
+ * @copyright Copyright (c) 2018 Andrey Borodulin
+ * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
+ */
 namespace borodulin\camunda\dto;
 
-
 use JsonSerializable;
+use yii\base\BaseObject;
 
-class BaseDto implements JsonSerializable
+/**
+ * Class BaseDto
+ * @package borodulin\camunda\dto
+ */
+class BaseDto extends BaseObject implements JsonSerializable
 {
 
     /**

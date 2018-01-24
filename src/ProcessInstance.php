@@ -45,15 +45,15 @@ class ProcessInstance extends Module
     /**
      * Query for the number of process instances that fulfill given parameters.
      * Takes the same parameters as the get instances method.
-     * @param array $params
+     * @param null $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListCount($params = [])
+    public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("process-instance/count", $params);
+            ->execute("process-instance/count", $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -61,15 +61,15 @@ class ProcessInstance extends Module
      * Query for process instances that fulfill given parameters. Parameters may be static as well as dynamic
      * runtime properties of process instances. The size of the result set can be retrieved by using
      * the get instances count method.
-     * @param array $params
+     * @param null $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getList($params = [])
+    public function getList($query = null)
     {
         return $this->getApi()
-            ->execute("process-instance", $params);
+            ->execute("process-instance", $query);
     }
 
     /**
@@ -111,15 +111,15 @@ class ProcessInstance extends Module
     /**
      * Query for the number of process instances that fulfill the given parameters. This method takes the same
      * message body as the POST query and therefore it is slightly more powerful than the GET query count.
-     * @param $params
+     * @param null $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListCountPost($params)
+    public function getListCountPost($query = null)
     {
         $result = $this->getApi()
-            ->postJson($params)
+            ->postJson($query)
             ->execute("process-instance/count");
         return ArrayHelper::getValue($result, 'count');
     }
@@ -128,15 +128,15 @@ class ProcessInstance extends Module
      * Query for process instances that fulfill given parameters through a JSON object. This method is slightly
      * more powerful than the GET query because it allows filtering by multiple process variables
      * of types String, Number or Boolean.
-     * @param $params
+     * @param $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListPost($params)
+    public function getListPost($query)
     {
         return $this->getApi()
-            ->postJson($params)
+            ->postJson($query)
             ->execute("process-instance");
     }
 
@@ -245,6 +245,7 @@ class ProcessInstance extends Module
     /**
      * Retrieves all variables of a given process instance.
      * @param $id
+     * @param bool $deserializeValues
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException

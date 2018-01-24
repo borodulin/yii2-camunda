@@ -35,7 +35,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getList($query)
+    public function getList($query = null)
     {
         return $this->getApi()
             ->execute("task", $query);
@@ -46,15 +46,15 @@ class Task extends Module
      * This method is slightly more powerful than the GET query because it allows filtering by multiple process
      * or task variables of types String, Number or Boolean. The size of the result set can be retrieved by
      * using get tasks count (POST) method.
-     * @param $params
+     * @param null $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListPost($params)
+    public function getListPost($query = null)
     {
         return $this->getApi()
-            ->postJson($params)
+            ->postJson($query)
             ->execute("task");
     }
 
@@ -66,7 +66,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListCount($query)
+    public function getListCount($query = null)
     {
         $result = $this->getApi()
             ->execute("task/count", $query);
@@ -117,7 +117,7 @@ class Task extends Module
     public function claim($id, $userId)
     {
         return $this->getApi()
-            ->setPostData(['userId' => $userId])
+            ->postJson(['userId' => $userId])
             ->execute("task/{$id}/claim");
     }
 
@@ -128,7 +128,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function unClaim($id)
+    public function unclaim($id)
     {
         return $this->getApi()
             ->setPostData()
@@ -165,7 +165,7 @@ class Task extends Module
      */
     public function submitForm($id, $variables = [])
     {
-        return $this->getApi()->setPostData([
+        return $this->getApi()->postJson([
             'variables' => $this->translateVariables($variables)
         ])
             ->execute("task/{$id}/submit-form");
@@ -182,7 +182,7 @@ class Task extends Module
      */
     public function resolve($id, $variables = [])
     {
-        return $this->getApi()->setPostData([
+        return $this->getApi()->postJson([
             'variables' => $this->translateVariables($variables)
         ])
             ->execute("task/{$id}/resolve");
@@ -199,7 +199,7 @@ class Task extends Module
      */
     public function setAssignee($id, $userId)
     {
-        return $this->getApi()->setPostData([
+        return $this->getApi()->postJson([
             'userId' => $userId
         ])
             ->execute("task/{$id}/assignee");
@@ -215,7 +215,7 @@ class Task extends Module
      */
     public function delegate($id, $userId)
     {
-        return $this->getApi()->setPostData([
+        return $this->getApi()->postJson([
             'userId' => $userId
         ])
             ->execute("task/{$id}/delegate");

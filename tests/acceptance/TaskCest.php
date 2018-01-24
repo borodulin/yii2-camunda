@@ -1,5 +1,6 @@
 <?php
 
+use borodulin\camunda\dto\TaskQuery;
 use borodulin\camunda\ProcessInstance;
 use borodulin\camunda\Task;
 
@@ -18,9 +19,9 @@ class TaskCest extends ApiCest
     {
         $this->start('demo3', '123');
         $I->assertEquals(1, $instance->getListCount());
-        $count = $task->getListCount([
-            'processInstanceBusinessKey' => '123',
-        ]);
+        $count = $task->getListCount(new TaskQuery([
+            'processInstanceBusinessKey' => '123'
+        ]));
         $I->assertEquals(1, $count);
         $result = $task->getList([
             'processInstanceBusinessKey' => '123',
@@ -30,10 +31,46 @@ class TaskCest extends ApiCest
             'processInstanceBusinessKey' => '123',
         ]);
         $I->assertEquals(0, $count);
+    }
 
-//        $query = new TaskQuery();
-//        $query->processDefinitionId = 'qwe';
-//        $query = $query->jsonSerialize();
-//        var_dump($query);
+    /**
+     * @param ProcessInstance $instance
+     * @param Task $task
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function submitForm(ProcessInstance $instance, Task $task, AcceptanceTester $I)
+    {
+        $this->start('demo5', '123');
+        $I->assertEquals(1, $instance->getListCount());
+        $result = $task->getList([
+            'processInstanceBusinessKey' => '123',
+        ]);
+        $taskId = $result[0]['id'];
+        $result = $task->getFormVariables($taskId);
+
+        $I->assertArraySubset([
+            'field1' => [
+                'type' => 'String',
+                'value' => null
+            ],
+            'field2' => [
+                'type' => 'Long',
+                'value' => 0,
+            ]
+        ], $result);
+
+        $I->expectException('borodulin\camunda\Exception', function () use ($task, $taskId) {
+            $task->submitForm($taskId, [
+                'field2' => 10,
+            ]);
+        });
+
+        $task->submitForm($taskId, [
+            'field1' => 'testValue',
+        ]);
+
+        $I->assertEquals(0, $instance->getListCount());
     }
 }
