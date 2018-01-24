@@ -4,21 +4,24 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_06z9vyi</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_06z9vyi" sourceRef="StartEvent_1" targetRef="Task_1gqy8b7" />
-    <bpmn:scriptTask id="Task_1gqy8b7" scriptFormat="groovy" camunda:resultVariable="testValue">
-      <bpmn:incoming>SequenceFlow_06z9vyi</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_07tlu3t</bpmn:outgoing>
-      <bpmn:script>10</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_07tlu3t" sourceRef="Task_1gqy8b7" targetRef="Task_10d77gg" />
+    <bpmn:sequenceFlow id="SequenceFlow_06z9vyi" sourceRef="StartEvent_1" targetRef="Task_1259n35" />
     <bpmn:endEvent id="EndEvent_0ksrvre">
       <bpmn:incoming>SequenceFlow_0mxk2s7</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0mxk2s7" sourceRef="Task_10d77gg" targetRef="EndEvent_0ksrvre" />
     <bpmn:userTask id="Task_10d77gg">
-      <bpmn:incoming>SequenceFlow_07tlu3t</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_07rnvwh</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0mxk2s7</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_07rnvwh" sourceRef="Task_1259n35" targetRef="Task_10d77gg" />
+    <bpmn:scriptTask id="Task_1259n35" scriptFormat="groovy" camunda:resultVariable="foo">
+      <bpmn:extensionElements>
+        <camunda:inputOutput />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_06z9vyi</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_07rnvwh</bpmn:outgoing>
+      <bpmn:script><![CDATA['bar']]></bpmn:script>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="demo3">
@@ -27,19 +30,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_06z9vyi_di" bpmnElement="SequenceFlow_06z9vyi">
         <di:waypoint xsi:type="dc:Point" x="209" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="329" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="322" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="269" y="99" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ScriptTask_18vyqt4_di" bpmnElement="Task_1gqy8b7">
-        <dc:Bounds x="329" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_07tlu3t_di" bpmnElement="SequenceFlow_07tlu3t">
-        <di:waypoint xsi:type="dc:Point" x="429" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="556" y="120" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="492.5" y="99" width="0" height="12" />
+          <dc:Bounds x="220.5" y="99" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0ksrvre_di" bpmnElement="EndEvent_0ksrvre">
@@ -57,6 +50,16 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="UserTask_1jm56s3_di" bpmnElement="Task_10d77gg">
         <dc:Bounds x="556" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_07rnvwh_di" bpmnElement="SequenceFlow_07rnvwh">
+        <di:waypoint xsi:type="dc:Point" x="422" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="556" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="489" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_17gxmkr_di" bpmnElement="Task_1259n35">
+        <dc:Bounds x="322" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

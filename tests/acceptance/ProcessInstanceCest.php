@@ -17,7 +17,7 @@ class ProcessInstanceCest extends ApiCest
     {
         $this->start('demo1', '123');
         $I->assertEquals(1, $instance->getListCount());
-        sleep(3);
+        sleep(1);
         foreach ($instance->getList() as $item) {
             $instance->delete($item['id']);
         }
@@ -37,9 +37,9 @@ class ProcessInstanceCest extends ApiCest
         foreach ($instance->getList() as $item) {
             $result = $instance->getVariables($item['id']);
             $I->assertArraySubset([
-                'testValue' =>[
-                    'type' =>"Integer",
-                    'value' => 10,
+                'foo' =>[
+                    'type' => 'String',
+                    'value' => 'bar',
                 ]
             ], $result);
         }

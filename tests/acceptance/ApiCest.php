@@ -7,11 +7,10 @@ use borodulin\camunda\ProcessDefinition;
 class ApiCest
 {
     /**
-     * @param AcceptanceTester $I
-     * @throws \yii\base\InvalidConfigException
      * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public function _before(AcceptanceTester $I)
+    public function _before()
     {
         $deployment = new Deployment();
         foreach ($deployment->getDeployments() as $item) {
@@ -20,11 +19,10 @@ class ApiCest
     }
 
     /**
-     * @param AcceptanceTester $I
      * @throws \borodulin\camunda\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function _after(AcceptanceTester $I)
+    public function _after()
     {
         $deployment = new Deployment();
         foreach ($deployment->getDeployments() as $item) {
@@ -41,7 +39,7 @@ class ApiCest
     protected function deploy($name)
     {
         return (new Deployment())
-            ->create($name, YII_APP_BASE_PATH . "/demo/$name.bpmn");
+            ->create($name, YII_APP_BASE_PATH . "tests/_data/$name.bpmn");
     }
 
     /**

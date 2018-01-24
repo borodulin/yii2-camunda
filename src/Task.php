@@ -66,7 +66,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getCount($query)
+    public function getListCount($query)
     {
         $result = $this->getApi()
             ->execute("task/count", $query);
@@ -81,7 +81,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getCountPost($params)
+    public function getListCountPost($params)
     {
         $result = $this->getApi()
             ->postJson($params)
@@ -145,7 +145,7 @@ class Task extends Module
      */
     public function complete($id, $variables = [])
     {
-        return $this->getApi()->setPostData([
+        return $this->getApi()->postJson([
             'variables' => $this->translateVariables($variables)
         ])
             ->execute("task/{$id}/complete");

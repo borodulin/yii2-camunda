@@ -6,6 +6,7 @@
  */
 namespace borodulin\camunda;
 
+use JsonSerializable;
 use yii\base\Component;
 use yii\helpers\Json;
 use yii\httpclient\Client;
@@ -45,7 +46,7 @@ class CamundaApi extends Component
      */
     public function postJson($json)
     {
-        $json = is_array($json) ? Json::encode($json) : $json;
+        $json = is_string($json) ? $json : Json::encode($json);
         $this->_request
             ->addHeaders(['content-type' => 'application/json'])
             ->setMethod('POST')
@@ -93,9 +94,12 @@ class CamundaApi extends Component
      * @return mixed
      * @throws Exception
      */
-    public function execute($endpoint, $params = [])
+    public function execute($endpoint, $params = null)
     {
         $url = $this->apiUrl . $endpoint;
+        if ($params instanceof JsonSerializable) {
+            $params = $params->jsonSerialize();
+        }
         if (count($params)) {
             $url .= '?' . http_build_query($params);
         }
