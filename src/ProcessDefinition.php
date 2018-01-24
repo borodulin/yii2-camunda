@@ -5,7 +5,7 @@
  * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
  */
 namespace borodulin\camunda;
-use yii\base\InvalidParamException;
+
 use yii\helpers\ArrayHelper;
 
 /**
@@ -348,19 +348,5 @@ class ProcessDefinition extends Module
             ])
             ->methodPut()
             ->execute("process-definition/key/$key/suspended");
-    }
-
-    protected function formatDate($date)
-    {
-        if (!is_null($date)) {
-            if (!is_numeric($date)) {
-                $date = strtotime($date);
-            }
-            if (!is_numeric($date)) {
-                throw new InvalidParamException('Execution date is invalid');
-            }
-            $date = date('c', $date);
-        }
-        return $date;
     }
 }

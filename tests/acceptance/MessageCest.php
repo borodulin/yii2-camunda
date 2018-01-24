@@ -1,10 +1,12 @@
 <?php
 
-
 use borodulin\camunda\Exception;
 use borodulin\camunda\Message;
 use borodulin\camunda\ProcessInstance;
 
+/**
+ * Class MessageCest
+ */
 class MessageCest extends ApiCest
 {
     /**

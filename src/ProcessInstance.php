@@ -300,6 +300,124 @@ class ProcessInstance extends Module
             ->execute("process-instance/$id/variables/$varName");
     }
 
+    /**
+     * Query for historic process instances that fulfill the given parameters.
+     * The size of the result set can be retrieved by using the get historic process instances count method.
+     * @param null $query
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyList($query = null)
+    {
+        return $this->getApi()
+            ->execute('history/process-instance', $query);
+    }
 
+    /**
+     * Query for the number of historic process instances that fulfill the given parameters.
+     * Takes the same parameters as the Get Process Instances method.
+     * @param null $query
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyListCount($query = null)
+    {
+        return $this->getApi()
+            ->execute('history/process-instance/count', $query);
+    }
 
+    /**
+     * Retrieves a single historic process instance according to the HistoricProcessInstance interface in the engine.
+     * @param string $id The id of the historic process instance to be retrieved.
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function history($id)
+    {
+        return $this->getApi()
+            ->execute("history/process-instance/{$id}");
+    }
+
+    /**
+     * Query for historic process instances that fulfill the given parameters.
+     * This method is slightly more powerful than the GET query because it allows filtering by multiple process
+     * variables of types String, Number or Boolean.
+     * @param null $query
+     * @param int $firstResult Pagination of results. Specifies the index of the first result to return.
+     * @param int $maxResults Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyListPost($query = null, $firstResult = 0, $maxResults = 10)
+    {
+        return $this->getApi()
+            ->postJson($query)
+            ->execute("history/process-instance", [
+                'firstResult' => $firstResult,
+                'maxResults' => $maxResults,
+            ]);
+    }
+
+    /**
+     * Query for the number of historic process instances that fulfill the given parameters.
+     * This method takes the same message body as the POST query and therefore it is slightly
+     * more powerful than the GET query count.
+     * @param null $query
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyListCountPost($query = null)
+    {
+        return $this->getApi()
+            ->postJson($query)
+            ->execute("history/process-instance/count");
+    }
+
+    /**
+     * Deletes a single process instance from the history.
+     * @param string $id The id of the historic process instance to be deleted
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyDelete($id)
+    {
+        return $this->getApi()
+            ->methodDelete()
+            ->execute("history/process-instance/{$id}");
+    }
+
+    /**
+     * Retrieves a report about the duration of completed process instances grouped by a period.
+     * These reports include the maximum, minimum and average duration of all completed process instances,
+     * which have been started in a period.
+     *   Note: This does include only historic data.
+     * @param $reportType
+     * @param $periodUnit
+     * @param null $processDefinitionIdIn
+     * @param null $processDefinitionKeyIn
+     * @param null $startedBefore
+     * @param null $startedAfter
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function historyDurationReport($reportType, $periodUnit, $processDefinitionIdIn = null,
+                                          $processDefinitionKeyIn = null, $startedBefore = null, $startedAfter = null)
+    {
+        return $this->getApi()
+            ->execute("history/process-instance/report", [
+                'reportType' => $reportType,
+                'periodUnit' => $periodUnit,
+                'processDefinitionIdIn' => $processDefinitionIdIn,
+                'processDefinitionKeyIn' => $processDefinitionKeyIn,
+                'startedBefore' => $this->formatDate($startedBefore),
+                'startedAfter' => $this->formatDate($startedAfter)
+            ]);
+    }
 }

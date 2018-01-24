@@ -1,8 +1,10 @@
 <?php
 
-
 use borodulin\camunda\ProcessDefinition;
 
+/**
+ * Class ProcessDefinitionCest
+ */
 class ProcessDefinitionCest extends ApiCest
 {
     /**

@@ -1,7 +1,5 @@
 <?php
-/**
- *
- */
+
 use borodulin\camunda\Deployment;
 use borodulin\camunda\Exception;
 

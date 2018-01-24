@@ -8,6 +8,7 @@ namespace borodulin\camunda;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\InvalidParamException;
 
 
 /**
@@ -43,5 +44,23 @@ abstract class Module
             return null;
         }
         return $result;
+    }
+
+    /**
+     * @param $date
+     * @return false|int|string
+     */
+    protected function formatDate($date)
+    {
+        if (!is_null($date)) {
+            if (!is_numeric($date)) {
+                $date = strtotime($date);
+            }
+            if (!is_numeric($date)) {
+                throw new InvalidParamException('Execution date is invalid');
+            }
+            $date = date('c', $date);
+        }
+        return $date;
     }
 }
