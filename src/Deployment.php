@@ -118,7 +118,7 @@ class Deployment extends Module
     public function create($deploymentName, $filename, $enableDuplicateFiltering = false, $deployChangedOnly = false)
     {
         $api = $this->getApi();
-        $api->request
+        $api->getRequest()
             ->setMethod('POST')
             ->addFile($deploymentName, $filename)
             ->setData([
