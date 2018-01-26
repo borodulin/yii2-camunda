@@ -28,10 +28,9 @@ abstract class Module
             if (!$api instanceof CamundaApi) {
                 throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
             }
-        } else {
-            $api = Yii::createObject(CamundaApi::className());
+            return clone $api;
         }
-        return $api;
+        return Yii::createObject(CamundaApi::className());
     }
 
     public static function translateVariables($variables)
