@@ -18,19 +18,28 @@ use yii\base\InvalidParamException;
 abstract class Module
 {
     /**
+     * @var CamundaApi
+     */
+    private $api;
+
+    /**
      * @return CamundaApi
      * @throws InvalidConfigException
      */
     protected function getApi()
     {
-        /** @var CamundaApi $api */
-        if ($api = Yii::$app->get('camunda', false)) {
-            if (!$api instanceof CamundaApi) {
-                throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
+        if ($this->api === null) {
+            /** @var CamundaApi $api */
+            if ($api = Yii::$app->get('camunda', false)) {
+                if (!$api instanceof CamundaApi) {
+                    throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
+                }
+                $this->api = $api;
+            } else {
+                $this->api = Yii::createObject(CamundaApi::className());
             }
-            return clone $api;
         }
-        return Yii::createObject(CamundaApi::className());
+        return $this->api;
     }
 
     public static function translateVariables($variables)
