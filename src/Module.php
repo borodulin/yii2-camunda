@@ -34,7 +34,7 @@ abstract class Module
         return $api;
     }
 
-    public function translateVariables($variables)
+    public static function translateVariables($variables)
     {
         $result = [];
         foreach ($variables as $key => $value) {
