@@ -146,7 +146,7 @@ class Task extends Module
     public function complete($id, $variables = [])
     {
         return $this->getApi()->postJson([
-            'variables' => $this->translateVariables($variables)
+            'variables' => $this::translateVariables($variables)
         ])
             ->execute("task/{$id}/complete");
     }
@@ -166,7 +166,7 @@ class Task extends Module
     public function submitForm($id, $variables = [])
     {
         return $this->getApi()->postJson([
-            'variables' => $this->translateVariables($variables)
+            'variables' => $this::translateVariables($variables)
         ])
             ->execute("task/{$id}/submit-form");
     }
@@ -183,7 +183,7 @@ class Task extends Module
     public function resolve($id, $variables = [])
     {
         return $this->getApi()->postJson([
-            'variables' => $this->translateVariables($variables)
+            'variables' => $this::translateVariables($variables)
         ])
             ->execute("task/{$id}/resolve");
     }
@@ -395,7 +395,7 @@ class Task extends Module
     public function modifyVariables($id, $modifications, $deletions = [])
     {
         return $this->getApi()->postJson([
-            'modifications' => $this->translateVariables($modifications),
+            'modifications' => $this::translateVariables($modifications),
             'deletions' => $deletions
         ])
             ->execute("task/{$id}/variables");

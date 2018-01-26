@@ -37,8 +37,12 @@ abstract class Module
     public static function translateVariables($variables)
     {
         $result = [];
-        foreach ($variables as $key => $value) {
-            $result[$key] = ['value' => $value, 'type' => gettype($value)];
+        foreach ((array)$variables as $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = $value;
+            } else {
+                $result[$key] = ['value' => $value, 'type' => ucfirst(gettype($value))];
+            }
         }
         if (empty($result)) {
             return null;

@@ -1,6 +1,7 @@
 <?php
 
 use borodulin\camunda\ProcessDefinition;
+use borodulin\camunda\ProcessInstance;
 
 /**
  * Class ProcessDefinitionCest
@@ -35,5 +36,27 @@ class ProcessDefinitionCest extends ApiCest
         $definition->suspendedByKey('demo2', false);
         $result = $definition->getList();
         $I->assertEquals(false, $result[0]['suspended']);
+    }
+
+    /**
+     * @param ProcessDefinition $definition
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function submitStartForm(ProcessDefinition $definition, ProcessInstance $instance, AcceptanceTester $I)
+    {
+        $this->deploy('demo6');
+        $I->expectException('borodulin\camunda\Exception', function () use ($definition){
+            $definition->submitStartFormByKey('demo6', [
+                'bk11' => 'qwe'
+            ]);
+        });
+
+        $definition->submitStartFormByKey('demo6', [
+            'bk' => 'qwe'
+        ]);
+
+        $I->assertEquals(1, $instance->getListCount());
     }
 }

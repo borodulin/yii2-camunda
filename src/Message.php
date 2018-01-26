@@ -23,7 +23,7 @@ class Message extends Module
     {
         return $this->getApi()->postJson([
             'messageName' => $name,
-            'processVariables' => $this->translateVariables($variables),
+            'processVariables' => $this::translateVariables($variables),
             'all' => true,
         ])->execute('message');
     }
@@ -41,7 +41,7 @@ class Message extends Module
         return $this->getApi()->postJson([
             'messageName' => $name,
             'businessKey' => $businessKey,
-            'processVariables' => $this->translateVariables($variables),
+            'processVariables' => $this::translateVariables($variables),
             'all' => false,
         ])->execute('message');
     }

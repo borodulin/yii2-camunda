@@ -271,7 +271,7 @@ class ProcessInstance extends Module
     public function modifyVariables($id, $modifications, $deletions = [])
     {
         return $this->getApi()->postJson([
-            'modifications' => $this->translateVariables($modifications),
+            'modifications' => $this::translateVariables($modifications),
             'deletions' => $deletions
         ])
             ->execute("process-instance/{$id}/variables");

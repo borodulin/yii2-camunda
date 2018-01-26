@@ -280,28 +280,38 @@ class ProcessDefinition extends Module
      * Submit Start Form
      * POST /process-definition/{id}/submit-form
      * @param $id
+     * @param null $variables
+     * @param null $businessKey
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function submitStartFormById($id)
+    public function submitStartFormById($id, $variables = null, $businessKey = null)
     {
         return $this->getApi()
-            ->setPostData()
+            ->postJson([
+                'variables' => $this::translateVariables($variables),
+                'businessKey' => $businessKey
+            ])
             ->execute("process-definition/$id/submit-form");
     }
 
     /**
      * POST /process-definition/key/{key}/submit-form (starts the latest version of process definition)
      * @param $key
+     * @param null $variables
+     * @param null $businessKey
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function submitStartFormByKey($key)
+    public function submitStartFormByKey($key, $variables = null, $businessKey = null)
     {
         return $this->getApi()
-            ->setPostData()
+            ->postJson([
+                'variables' => $this::translateVariables($variables),
+                'businessKey' => $businessKey
+            ])
             ->execute("process-definition/key/$key/submit-form");
     }
 

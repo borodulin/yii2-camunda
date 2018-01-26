@@ -60,7 +60,7 @@ class ApiCest
             if ($def['key'] == $name) {
                 $processes[] = $api->startInstanceById($def['id'], [
                     'businessKey' => $bk,
-                    'variables' => $api->translateVariables($params)
+                    'variables' => $api::translateVariables($params)
                 ]);
             }
         }
