@@ -40,6 +40,7 @@ class ProcessDefinitionCest extends ApiCest
 
     /**
      * @param ProcessDefinition $definition
+     * @param ProcessInstance $instance
      * @param AcceptanceTester $I
      * @throws \borodulin\camunda\Exception
      * @throws \yii\base\InvalidConfigException
