@@ -231,7 +231,7 @@ class Task extends Module
     public function getRenderedForm($id)
     {
         return $this->getApi()
-            ->execute("/task/{$id}/rendered-form");
+            ->execute("task/{$id}/rendered-form");
     }
 
     /**
