@@ -31,11 +31,14 @@ class CamundaApi extends Component
     {
         parent::init();
         $this->apiUrl = rtrim($this->apiUrl, '/') . '/';
-        $this->_request = (new Client())->createRequest();
+
     }
 
     public function getRequest()
     {
+        if ($this->_request === null) {
+            $this->_request = (new Client())->createRequest();
+        }
         return $this->_request;
     }
 
@@ -47,7 +50,7 @@ class CamundaApi extends Component
     public function postJson($json)
     {
         $json = is_string($json) ? $json : Json::encode($json);
-        $this->_request
+        $this->getRequest()
             ->addHeaders(['content-type' => 'application/json'])
             ->setMethod('POST')
             ->setContent($json);
@@ -59,7 +62,7 @@ class CamundaApi extends Component
      */
     public function methodDelete()
     {
-        $this->_request->setMethod('DELETE');
+        $this->getRequest()->setMethod('DELETE');
         return $this;
     }
 
@@ -68,13 +71,13 @@ class CamundaApi extends Component
      */
     public function methodPut()
     {
-        $this->_request->setMethod('PUT');
+        $this->getRequest()->setMethod('PUT');
         return $this;
     }
 
     public function methodGet()
     {
-        $this->_request->setMethod('GET');
+        $this->getRequest()->setMethod('GET');
         return $this;
     }
 
@@ -84,7 +87,7 @@ class CamundaApi extends Component
      */
     public function setPostData($data = [])
     {
-        $this->_request->setMethod('POST')->addData($data);
+        $this->getRequest()->setMethod('POST')->addData($data);
         return $this;
     }
 
@@ -103,9 +106,12 @@ class CamundaApi extends Component
         if (count($params)) {
             $url .= '?' . http_build_query($params);
         }
-        $this->_request->setUrl($url);
+        $request = $this->getRequest();
+        $this->_request = null;
 
-        $response = $this->_request->send();
+        $request->setUrl($url);
+
+        $response = $request->send();
 
         if ($response->isOk) {
             return Json::decode($response->content);
