@@ -27,6 +27,22 @@ class ProcessDefinitionCest extends ApiCest
      * @throws \borodulin\camunda\Exception
      * @throws \yii\base\InvalidConfigException
      */
+    public function getDefinitionByKey(ProcessDefinition $definition, AcceptanceTester $I)
+    {
+        $I->expectException('borodulin\camunda\Exception', function () use ($definition) {
+            $definition->getDefinitionByKey('demo1');
+        });
+        $this->deploy('demo1');
+        $result = $definition->getDefinitionByKey('demo1');
+        $I->assertArraySubset(['key' => 'demo1'], $result);
+    }
+
+    /**
+     * @param ProcessDefinition $definition
+     * @param AcceptanceTester $I
+     * @throws \borodulin\camunda\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
     public function suspendByKey(ProcessDefinition $definition, AcceptanceTester $I)
     {
         $this->start('demo2', '123');
