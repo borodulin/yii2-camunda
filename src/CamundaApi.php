@@ -114,7 +114,10 @@ class CamundaApi extends Component
         $response = $request->send();
 
         if ($response->isOk) {
-            return Json::decode($response->content);
+            if ($response->getFormat() === Client::FORMAT_JSON) {
+                return Json::decode($response->content);
+            }
+            return $response->content;
         }
 
         throw new Exception(json_decode($response->content, true) ?: $response->content);
