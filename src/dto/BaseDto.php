@@ -26,6 +26,8 @@ class BaseDto extends BaseObject implements JsonSerializable
     public function jsonSerialize()
     {
         $array = (array)$this;
-        return array_filter($array);
+        return array_filter($array, function ($value) {
+            return $value !== null;
+        });
     }
 }

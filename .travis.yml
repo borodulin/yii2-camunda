@@ -12,8 +12,8 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - docker pull camunda/camunda-bpm-platform:latest
-  - docker run -d --name camunda -p 8080:8080 camunda/camunda-bpm-platform:latest
+  - docker pull bashkirtsevich/camunda
+  - docker run -d --name camunda -p 8080:8080 bashkirtsevich/camunda
 
 install:
   - composer install
