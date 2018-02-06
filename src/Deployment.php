@@ -6,6 +6,7 @@
  */
 namespace borodulin\camunda;
 
+use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -108,7 +109,7 @@ class Deployment extends Module
 
     /**
      * @param string $deploymentName The name for the deployment to be created.
-     * @param string $filename The file of model to create the deployment resource.
+     * @param string|array $filename The file of model to create the deployment resource.
      * @param boolean $enableDuplicateFiltering A flag indicating whether the process engine should perform duplicate checking for the deployment or not. This allows you to check if a deployment with the same name and the same resouces already exists and if true, not create a new deployment but instead return the existing deployment. The default value is false.
      * @param boolean $deployChangedOnly A flag indicating whether the process engine should perform duplicate checking on a per-resource basis. If set to true, only those resources that have actually changed are deployed. Checks are made against resources included previous deployments of the same name and only against the latest versions of those resources. If set to true, the option enable-duplicate-filtering is overridden and set to true.
      * @return array
@@ -118,16 +119,26 @@ class Deployment extends Module
     public function create($deploymentName, $filename, $enableDuplicateFiltering = false, $deployChangedOnly = false)
     {
         $api = $this->getApi();
-        $api->getRequest()
+        $request = $api->getRequest()
             ->setMethod('POST')
-            ->addFile($deploymentName, $filename)
             ->setData([
                 'deployment-name' => $deploymentName,
                 'enable-duplicate-filtering' => $enableDuplicateFiltering ? 'true' : 'false',
                 'deploy-changed-only' => $deployChangedOnly ? 'true' : 'false',
             ]);
+        if (is_string($filename)) {
+            $request->addFile(basename($filename), $filename);
+        } elseif (is_array($filename)) {
+            foreach ($filename as $key => $name) {
+                if (is_numeric($key)) {
+                    $key = basename($name);
+                }
+                $request->addFile($key, $name);
+            }
+        } else {
+            throw new InvalidParamException('Filename is invalid');
+        }
         return $api
             ->execute("deployment/create");
-
     }
 }
