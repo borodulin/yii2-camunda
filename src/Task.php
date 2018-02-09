@@ -463,4 +463,127 @@ class Task extends Module
             ->methodDelete()
             ->execute("task/{$id}/variables/{$varName}");
     }
+
+    /**
+     * Retrieves a variable from the context of a given task.
+     * @param $id
+     * @param $varName
+     * @param bool $deserializeValue
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     * @throws Exception
+     */
+    public function  getLocalVariable($id, $varName, $deserializeValue = false)
+    {
+        return $this->getApi()
+            ->execute("task/{$id}/localVariables/{$varName}", [
+                'deserializeValue' => $deserializeValue
+            ]);
+    }
+
+    /**
+     * Retrieves a binary variable from the context of a given task. Applicable for byte array and file variables.
+     * @param $id
+     * @param $varName
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getLocalVariableBinary($id, $varName)
+    {
+        return $this->getApi()
+            ->execute("task/{$id}/localVariables/{$varName}/data");
+    }
+
+    /**
+     * Retrieves all variables of a given task.
+     * @param $id
+     * @param bool $deserializeValues
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getLocalVariables($id, $deserializeValues = false)
+    {
+        return $this->getApi()
+            ->execute("task/{$id}/localVariables", [
+                'deserializeValues' => $deserializeValues
+            ]);
+    }
+
+    /**
+     * Updates or deletes the variables in the context of a task. Updates precede deletions.
+     * So, if a variable is updated AND deleted, the deletion overrides the update.
+     * @param $id
+     * @param $modifications
+     * @param array $deletions
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function modifyLocalVariables($id, $modifications, $deletions = [])
+    {
+        return $this->getApi()->postJson([
+            'modifications' => $this::translateVariables($modifications),
+            'deletions' => $deletions
+        ])
+            ->execute("task/{$id}/localVariables");
+    }
+
+    /**
+     * Sets a variable in the context of a given task.
+     * @param $id
+     * @param $varName
+     * @param $value
+     * @param null $type
+     * @param null $valueInfo
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function updateLocalVariable($id, $varName, $value, $type = null, $valueInfo = null)
+    {
+        $type = $type ? $type : gettype($value);
+        return $this->getApi()->postJson([
+            'value' => $value,
+            'type' => $type,
+            'valueInfo' => $valueInfo,
+        ])
+            ->methodPut()
+            ->execute("task/{$id}/localVariables/{$varName}");
+    }
+
+    /**
+     * Sets the serialized value for a binary variable or the binary value for a file variable.
+     * @param $id
+     * @param $varName
+     * @param $data
+     * @param $valueType
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function postLocalVariableBinary($id, $varName, $data, $valueType)
+    {
+        return $this->getApi()->postJson([
+            'data' => $data,
+            'valueType' => $valueType,
+        ])
+            ->execute("task/{$id}/localVariables/{$varName}");
+    }
+
+    /**
+     * Removes a local variable from a task.
+     * @param $id
+     * @param $varName
+     * @return mixed
+     * @throws Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function deleteLocalVariable($id, $varName)
+    {
+        return $this->getApi()
+            ->methodDelete()
+            ->execute("task/{$id}/localVariables/{$varName}");
+    }
 }
