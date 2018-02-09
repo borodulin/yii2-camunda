@@ -245,7 +245,7 @@ class Task extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getFormVariables($id, $variableNames = null, $deserializeValues = true)
+    public function getFormVariables($id, $variableNames = null, $deserializeValues = false)
     {
         return $this->getApi()
             ->execute("task/{$id}/form-variables", [
@@ -473,7 +473,7 @@ class Task extends Module
      * @throws \yii\base\InvalidConfigException
      * @throws Exception
      */
-    public function  getLocalVariable($id, $varName, $deserializeValue = false)
+    public function getLocalVariable($id, $varName, $deserializeValue = false)
     {
         return $this->getApi()
             ->execute("task/{$id}/localVariables/{$varName}", [
