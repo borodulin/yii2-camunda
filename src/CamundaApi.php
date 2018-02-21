@@ -28,7 +28,7 @@ class CamundaApi extends Component
 
     /**
      * Prepare request callback function.
-     * function (Request $request){};
+     * function ($this){ return new Request(); };
      * @var callable
      */
     public $prepareRequest;
@@ -41,21 +41,25 @@ class CamundaApi extends Component
     public function init()
     {
         parent::init();
-        $this->apiUrl = rtrim($this->apiUrl, '/') . '/';
+        $this->apiUrl = rtrim($this->apiUrl, '/');
 
     }
 
     public function getRequest()
     {
         if ($this->_request === null) {
-            $this->_request = (new Client())->createRequest();
-            if ($this->username) {
-                $this->_request->addHeaders([
-                    'Authorization' => 'Basic '.base64_encode("$this->username:$this->password")
-                ]);
-            }
             if (is_callable($this->prepareRequest)) {
-                call_user_func($this->prepareRequest, $this->_request);
+                $this->_request = call_user_func($this->prepareRequest, $this);
+            } else {
+                $this->_request = (new Client([
+                    'baseUrl' => $this->apiUrl,
+                ]))->createRequest();
+
+                if ($this->username) {
+                    $this->_request->addHeaders([
+                        'Authorization' => 'Basic '.base64_encode("$this->username:$this->password")
+                    ]);
+                }
             }
         }
         return $this->_request;
@@ -116,19 +120,17 @@ class CamundaApi extends Component
      * @return mixed
      * @throws Exception
      */
-    public function execute($endpoint, $params = null)
+    public function execute($endpoint, $params = [])
     {
-        $url = $this->apiUrl . $endpoint;
         if ($params instanceof JsonSerializable) {
             $params = $params->jsonSerialize();
         }
-        if (count($params)) {
-            $url .= '?' . http_build_query($params);
-        }
+        $params[0] = $endpoint;
+
         $request = $this->getRequest();
         $this->_request = null;
 
-        $request->setUrl($url);
+        $request->setUrl($params);
 
         $response = $request->send();
 
