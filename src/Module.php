@@ -7,6 +7,7 @@
 namespace borodulin\camunda;
 
 use Yii;
+use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 
@@ -17,7 +18,7 @@ use yii\base\InvalidConfigException;
  * Class Module
  * @package borodulin\camunda
  */
-abstract class Module
+abstract class Module extends BaseObject
 {
     /**
      * @var CamundaApi
