@@ -8,4 +8,10 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(__DIR__) . '/vendor',
+    'components' => [
+        'camunda' => [
+            'class' => \borodulin\camunda\CamundaApi::class,
+            'apiUrl' => 'http://camunda:8080/engine-rest'
+        ],
+    ],
 ];

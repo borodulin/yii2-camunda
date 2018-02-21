@@ -11,10 +11,11 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - docker run -d --name camunda -p 8080:8080 bashkirtsevich/camunda
+  - docker network create camunda
+  - docker run -d --net=camunda --name camunda bashkirtsevich/camunda
 
 install:
   - docker run -v $PWD:/app borodulin/php:7.0 composer install
 
 script:
-  - docker run -v $PWD:/app borodulin/php:7.0 vendor/bin/codecept run
+  - docker run --net=camunda -v $PWD:/app borodulin/php:7.0 vendor/bin/codecept run
