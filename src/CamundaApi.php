@@ -22,6 +22,17 @@ class CamundaApi extends Component
 {
     public $apiUrl = 'http://localhost:8080/engine-rest';
 
+    public $username;
+
+    public $password;
+
+    /**
+     * Prepare request callback function.
+     * function (Request $request){};
+     * @var callable
+     */
+    public $prepareRequest;
+
     /**
      * @var Request
      */
@@ -38,6 +49,14 @@ class CamundaApi extends Component
     {
         if ($this->_request === null) {
             $this->_request = (new Client())->createRequest();
+            if ($this->username) {
+                $this->_request->addHeaders([
+                    'Authorization' => 'Basic '.base64_encode("$this->username:$this->password")
+                ]);
+            }
+            if (is_callable($this->prepareRequest)) {
+                call_user_func($this->prepareRequest, $this->_request);
+            }
         }
         return $this->_request;
     }
