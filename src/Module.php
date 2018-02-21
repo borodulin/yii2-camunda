@@ -7,11 +7,13 @@
 namespace borodulin\camunda;
 
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
 
 
 /**
+ * @property CamundaApi $api
+ *
  * Class Module
  * @package borodulin\camunda
  */
@@ -20,28 +22,32 @@ abstract class Module
     /**
      * @var CamundaApi
      */
-    private $api;
+    private $_api;
 
     /**
      * @return CamundaApi
      * @throws InvalidConfigException
      */
-    protected function getApi()
+    public function getApi()
     {
-        if ($this->api === null) {
+        if ($this->_api === null) {
             /** @var CamundaApi $api */
             if ($api = Yii::$app->get('camunda', false)) {
                 if (!$api instanceof CamundaApi) {
                     throw new InvalidConfigException('Camunda should be an instance of the CamundaApi');
                 }
-                $this->api = $api;
+                $this->_api = $api;
             } else {
-                $this->api = Yii::createObject(CamundaApi::className());
+                $this->_api = Yii::createObject(CamundaApi::class);
             }
         }
-        return $this->api;
+        return $this->_api;
     }
 
+    /**
+     * @param $variables
+     * @return array|null
+     */
     public static function translateVariables($variables)
     {
         $result = [];
@@ -69,10 +75,31 @@ abstract class Module
                 $date = strtotime($date);
             }
             if (!is_numeric($date)) {
-                throw new InvalidParamException('Execution date is invalid');
+                throw new InvalidArgumentException('Execution date is invalid');
             }
             $date = date('c', $date);
         }
         return $date;
+    }
+
+    /**
+     * @param $value
+     * @throws InvalidConfigException
+     */
+    public function setApi($value)
+    {
+        if (is_string($value)) {
+            $this->_api = Yii::createObject(CamundaApi::class, [
+                'apiUrl' => $value
+            ]);
+        } elseif (is_array($value)) {
+            if (!isset($value['class'])) {
+                $value['class'] = CamundaApi::class;
+            }
+            $this->_api = Yii::createObject($value);
+        } elseif ($value instanceof CamundaApi) {
+            $this->_api = $value;
+        }
+        throw new InvalidArgumentException('Api is invalid');
     }
 }
