@@ -100,7 +100,8 @@ abstract class Module extends BaseObject
             $this->_api = Yii::createObject($value);
         } elseif ($value instanceof CamundaApi) {
             $this->_api = $value;
+        } else {
+            throw new InvalidArgumentException('Api is invalid');
         }
-        throw new InvalidArgumentException('Api is invalid');
     }
 }
