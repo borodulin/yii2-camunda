@@ -6,6 +6,7 @@
  */
 namespace borodulin\camunda;
 
+use borodulin\camunda\dto\TaskQuery;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -30,7 +31,7 @@ class Task extends Module
     /**
      * Query for tasks that fulfill a given filter.
      * The size of the result set can be retrieved by using get tasks count method.
-     * @param $query
+     * @param array|TaskQuery $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
@@ -46,22 +47,27 @@ class Task extends Module
      * This method is slightly more powerful than the GET query because it allows filtering by multiple process
      * or task variables of types String, Number or Boolean. The size of the result set can be retrieved by
      * using get tasks count (POST) method.
-     * @param null $query
+     * @param array|TaskQuery $query
+     * @param int $firstResult
+     * @param int $maxResults
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListPost($query = null)
+    public function getListPost($query = null, $firstResult = 0, $maxResults = 20)
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("task");
+            ->execute("task", [
+                'firstResult' => $firstResult,
+                'maxResults' => $maxResults
+            ]);
     }
 
     /**
      * Get the number of tasks that fulfill a provided filter.
      * Corresponds to the size of the result set when using the get tasks method.
-     * @param $query
+     * @param array|TaskQuery $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
@@ -76,15 +82,15 @@ class Task extends Module
     /**
      * Get the number of tasks that fulfill the given filter.
      * Corresponds to the size of the result set of the get tasks (POST) method and takes the same parameters.
-     * @param $params
+     * @param array $query
      * @return mixed
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListCountPost($params)
+    public function getListCountPost($query)
     {
         $result = $this->getApi()
-            ->postJson($params)
+            ->postJson($query)
             ->execute("task/count");
         return ArrayHelper::getValue($result, 'count');
     }
