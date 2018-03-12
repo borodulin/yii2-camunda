@@ -104,6 +104,12 @@ class CamundaApi extends Component
         return $this;
     }
 
+    public function methodOptions()
+    {
+        $this->getRequest()->setMethod('OPTIONS');
+        return $this;
+    }
+
     /**
      * @param array $data
      * @return $this
