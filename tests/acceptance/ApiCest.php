@@ -53,17 +53,12 @@ class ApiCest
      */
     protected function start($name, $bk, $params = [])
     {
-        $result = $this->deploy($name);
+        $this->deploy($name);
         $api = new ProcessDefinition();
-        $processes = [];
-        foreach ($result['deployedProcessDefinitions'] as $def) {
-            if ($def['key'] == $name) {
-                $processes[] = $api->startInstanceById($def['id'], [
-                    'businessKey' => $bk,
-                    'variables' => $api::translateVariables($params)
-                ]);
-            }
-        }
-        return $processes;
+        $process = $api->startInstanceByKey($name, [
+            'businessKey' => $bk,
+            'variables' => $api::translateVariables($params)
+        ]);
+        return $process;
     }
 }

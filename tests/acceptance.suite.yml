@@ -8,8 +8,8 @@ actor: AcceptanceTester
 modules:
     enabled:
         - \Helper\Acceptance
-        - Yii2
         - Asserts
+        - Yii2
     config:
         Yii2:
             configFile: 'tests/_data/test-local.php'
