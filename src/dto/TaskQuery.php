@@ -549,5 +549,4 @@ class TaskQuery extends BaseDto
      * @var
      */
     public $maxResults;
-
 }

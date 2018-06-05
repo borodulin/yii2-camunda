@@ -43,7 +43,7 @@ class Authorization extends Module
     public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("authorization/count", $query);
+            ->execute('authorization/count', $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -89,7 +89,7 @@ class Authorization extends Module
     {
         return $this->getApi()
             ->methodOptions()
-            ->execute($id ? "authorization/{$id}" : "authorization");
+            ->execute($id ? "authorization/{$id}" : 'authorization');
     }
 
     /**

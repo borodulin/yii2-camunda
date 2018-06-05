@@ -38,7 +38,7 @@ class VariableInstanceQuery extends BaseDto
     public $executionIdIn;
 
     /**
-     * 	Only include variable instances which belong to one of the passed case instance ids.
+     *  Only include variable instances which belong to one of the passed case instance ids.
      * @var
      */
     public $caseInstanceIdIn;

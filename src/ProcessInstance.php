@@ -53,7 +53,7 @@ class ProcessInstance extends Module
     public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("process-instance/count", $query);
+            ->execute('process-instance/count', $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -69,7 +69,7 @@ class ProcessInstance extends Module
     public function getList($query = null)
     {
         return $this->getApi()
-            ->execute("process-instance", $query);
+            ->execute('process-instance', $query);
     }
 
     /**
@@ -120,7 +120,7 @@ class ProcessInstance extends Module
     {
         $result = $this->getApi()
             ->postJson($query)
-            ->execute("process-instance/count");
+            ->execute('process-instance/count');
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -137,7 +137,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("process-instance");
+            ->execute('process-instance');
     }
 
     /**
@@ -172,7 +172,7 @@ class ProcessInstance extends Module
             'suspended' => $suspended
         ])
             ->methodPut()
-            ->execute("process-instance/suspended");
+            ->execute('process-instance/suspended');
     }
 
     /**
@@ -190,7 +190,7 @@ class ProcessInstance extends Module
             'suspended' => $suspended
         ])
             ->methodPut()
-            ->execute("process-instance/suspended");
+            ->execute('process-instance/suspended');
     }
 
     /**
@@ -356,7 +356,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("history/process-instance", [
+            ->execute('history/process-instance', [
                 'firstResult' => $firstResult,
                 'maxResults' => $maxResults,
             ]);
@@ -375,7 +375,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("history/process-instance/count");
+            ->execute('history/process-instance/count');
     }
 
     /**
@@ -407,11 +407,17 @@ class ProcessInstance extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function historyDurationReport($reportType, $periodUnit, $processDefinitionIdIn = null,
-                                          $processDefinitionKeyIn = null, $startedBefore = null, $startedAfter = null)
-    {
+    public function historyDurationReport(
+        $reportType,
+        $periodUnit,
+        $processDefinitionIdIn = null,
+        $processDefinitionKeyIn = null,
+        $startedBefore = null,
+        $startedAfter = null
+    ) {
+    
         return $this->getApi()
-            ->execute("history/process-instance/report", [
+            ->execute('history/process-instance/report', [
                 'reportType' => $reportType,
                 'periodUnit' => $periodUnit,
                 'processDefinitionIdIn' => $processDefinitionIdIn,

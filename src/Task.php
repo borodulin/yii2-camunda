@@ -39,7 +39,7 @@ class Task extends Module
     public function getList($query = null)
     {
         return $this->getApi()
-            ->execute("task", $query);
+            ->execute('task', $query);
     }
 
     /**
@@ -58,7 +58,7 @@ class Task extends Module
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("task", [
+            ->execute('task', [
                 'firstResult' => $firstResult,
                 'maxResults' => $maxResults
             ]);
@@ -75,7 +75,7 @@ class Task extends Module
     public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("task/count", $query);
+            ->execute('task/count', $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -91,7 +91,7 @@ class Task extends Module
     {
         $result = $this->getApi()
             ->postJson($query)
-            ->execute("task/count");
+            ->execute('task/count');
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -271,7 +271,7 @@ class Task extends Module
     {
         return $this->getApi()
             ->postJson($params)
-            ->execute("task/create");
+            ->execute('task/create');
     }
 
     /**

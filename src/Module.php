@@ -13,7 +13,6 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 
-
 /**
  * @property CamundaApi $api
  *

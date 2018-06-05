@@ -18,4 +18,5 @@ install:
   - docker run -v $PWD:/app borodulin/php:7.0 composer install
 
 script:
+  - vendor/bin/phpcs --standard=vendor/yiisoft/yii2-coding-standards/Yii2 --extensions=php --ignore=vendor,tests .
   - docker run --net=camunda -v $PWD:/app borodulin/php:7.0 vendor/bin/codecept run

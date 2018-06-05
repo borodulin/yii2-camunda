@@ -5,6 +5,7 @@
  * @license https://github.com/borodulin/yii2-camunda/blob/master/LICENSE
  */
 namespace borodulin\camunda;
+
 use borodulin\camunda\dto\ExecutionQuery;
 use yii\helpers\ArrayHelper;
 
@@ -70,7 +71,7 @@ class Execution extends Module
     {
         return $this->getApi()
             ->postJson($query)
-            ->execute("execution", [
+            ->execute('execution', [
                 'firstResult' => $firstResult,
                 'maxResults' => $maxResults,
             ]);

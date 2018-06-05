@@ -139,6 +139,6 @@ class Deployment extends Module
             throw new InvalidParamException('Filename is invalid');
         }
         return $api
-            ->execute("deployment/create");
+            ->execute('deployment/create');
     }
 }

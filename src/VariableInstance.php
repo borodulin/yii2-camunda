@@ -40,7 +40,7 @@ class VariableInstance extends Module
     public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("variable-instance/count", $query);
+            ->execute('variable-instance/count', $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -84,7 +84,7 @@ class VariableInstance extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function getListPost($query = null, $firstResult = 0, $maxResults =20, $deserializeValues = false)
+    public function getListPost($query = null, $firstResult = 0, $maxResults = 20, $deserializeValues = false)
     {
         return $this->getApi()
             ->postJson($query)

@@ -106,7 +106,7 @@ class ProcessDefinition extends Module
     public function getListCount($query = null)
     {
         $result = $this->getApi()
-            ->execute("process-definition/count", $query);
+            ->execute('process-definition/count', $query);
         return ArrayHelper::getValue($result, 'count');
     }
 
@@ -121,7 +121,7 @@ class ProcessDefinition extends Module
     public function getList($query = null)
     {
         return $this->getApi()
-            ->execute("process-definition", $query);
+            ->execute('process-definition', $query);
     }
 
     /**
@@ -188,7 +188,7 @@ class ProcessDefinition extends Module
     public function getProcessInstanceStatistics()
     {
         return $this->getApi()
-            ->execute("process-definition/statistics");
+            ->execute('process-definition/statistics');
     }
 
     /**

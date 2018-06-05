@@ -42,7 +42,6 @@ class CamundaApi extends Component
     {
         parent::init();
         $this->apiUrl = rtrim($this->apiUrl, '/');
-
     }
 
     public function getRequest()
@@ -57,7 +56,7 @@ class CamundaApi extends Component
 
                 if ($this->username) {
                     $this->_request->addHeaders([
-                        'Authorization' => 'Basic '.base64_encode("$this->username:$this->password")
+                        'Authorization' => 'Basic ' . base64_encode("$this->username:$this->password")
                     ]);
                 }
             }
@@ -148,7 +147,5 @@ class CamundaApi extends Component
         }
 
         throw new Exception(json_decode($response->content, true) ?: $response->content);
-
     }
-
 }
