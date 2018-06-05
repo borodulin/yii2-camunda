@@ -6,10 +6,12 @@
  */
 namespace borodulin\camunda;
 
+use JsonSerializable;
 use Yii;
 use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
+use yii\helpers\Json;
 
 
 /**
@@ -53,10 +55,18 @@ abstract class Module extends BaseObject
     {
         $result = [];
         foreach ((array)$variables as $key => $value) {
-            if (is_array($value)) {
-                $result[$key] = $value;
-            } else {
+            if ($value instanceof JsonSerializable) {
+                $result[$key] = ['value' => Json::encode($value), 'type' => 'Json'];
+            } elseif (is_array($value)) {
+                if (isset($value['value'], $value['type'])) {
+                    $result[$key] = $value;
+                } else {
+                    $result[$key] = ['value' => Json::encode($value), 'type' => 'Json'];
+                }
+            } elseif (is_scalar($value)) {
                 $result[$key] = ['value' => $value, 'type' => ucfirst(gettype($value))];
+            } else {
+                throw new InvalidArgumentException('Type of value: "' . gettype($value) . '" is not supported.');
             }
         }
         if (empty($result)) {
