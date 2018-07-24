@@ -72,13 +72,14 @@ class Deployment extends Module
      * @throws Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function deleteDeployment($id, $cascade = true, $skipCustomListeners = false)
+    public function deleteDeployment($id, $cascade = true, $skipCustomListeners = false, $skipIoMappings = false)
     {
         return $this->getApi()
             ->methodDelete()
             ->execute('deployment/' . $id, [
                 'cascade' => $cascade ? 'true' : 'false',
-                'skipCustomListeners' => $skipCustomListeners ? 'true' : 'false'
+                'skipCustomListeners' => $skipCustomListeners ? 'true' : 'false',
+                'skipIoMappings' => $skipIoMappings ? 'true' : 'false',
             ]);
     }
 
