@@ -41,7 +41,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.17-dev"
+            "dev-master": "1.0.x-dev"
         }
     },
     "repositories": [
