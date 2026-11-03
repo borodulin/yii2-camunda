@@ -1,49 +1,58 @@
 {
-  "name": "borodulin/yii2-camunda",
-  "description": "The Camunda Rest API extension for the Yii2 framework",
-  "keywords": ["yii2", "camunda", "bpmn", "rest", "api"],
-  "homepage": "https://github.com/borodulin/yii2-camunda",
-  "type": "yii2-extension",
-  "license": "MIT",
-  "support": {
-    "issues": "https://github.com/borodulin/yii2-camunda/issues",
-    "source": "https://github.com/borodulin/yii2-camunda"
-  },
-  "authors": [
-    {
-      "name": "Andrey Borodulin",
-      "email": "borodulin@gmail.com"
+    "name": "borodulin/yii2-camunda",
+    "description": "The Camunda Rest API extension for the Yii2 framework",
+    "keywords": [
+        "yii2",
+        "camunda",
+        "bpmn",
+        "rest",
+        "api"
+    ],
+    "homepage": "https://github.com/borodulin/yii2-camunda",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/borodulin/yii2-camunda/issues",
+        "source": "https://github.com/borodulin/yii2-camunda"
+    },
+    "authors": [
+        {
+            "name": "Andrey Borodulin",
+            "email": "borodulin@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "yiisoft/yii2": "^2.0.14",
+        "yiisoft/yii2-httpclient": "^2.0.5"
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.2 || ^5.0",
+        "codeception/module-asserts": "^2.0 || ^3.0",
+        "codeception/module-yii2": "^1.1",
+        "yiisoft/yii2-coding-standards": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "borodulin\\camunda\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.17-dev"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "require": {
-    "yiisoft/yii2": ">=2.0.4",
-    "yiisoft/yii2-httpclient": ">=2.0.5"
-  },
-  "require-dev": {
-    "yiisoft/yii2-debug": "~2.0.0",
-    "yiisoft/yii2-gii": "~2.0.0",
-    "yiisoft/yii2-faker": "~2.0.0",
-    "yiisoft/yii2-coding-standards": "~2.0.3",
-    "codeception/base": "^2.2.3",
-    "codeception/verify": "~0.3.1",
-    "guzzlehttp/guzzle": ">=4.1.4 <7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "borodulin\\camunda\\": "src"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.17-dev"
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://asset-packagist.org"
-    }
-  ]
 }

@@ -61,7 +61,7 @@ class TaskCest extends ApiCest
             ]
         ], $result);
 
-        $I->expectException('borodulin\camunda\Exception', function () use ($task, $taskId) {
+        $I->expectThrowable('borodulin\camunda\Exception', function () use ($task, $taskId) {
             $task->submitForm($taskId, [
                 'field2' => 10,
             ]);

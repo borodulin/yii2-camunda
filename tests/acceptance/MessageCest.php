@@ -22,7 +22,7 @@ class MessageCest extends ApiCest
 
         $I->assertEquals(1, $instance->getListCount());
 
-        $I->expectException('borodulin\camunda\Exception', function () use ($message) {
+        $I->expectThrowable('borodulin\camunda\Exception', function () use ($message) {
             $message->messageOne('testMessage', '124');
         });
 
@@ -30,7 +30,7 @@ class MessageCest extends ApiCest
 
         $I->assertEquals(0, $instance->getListCount());
 
-        $I->expectException('borodulin\camunda\Exception', function () use ($message) {
+        $I->expectThrowable('borodulin\camunda\Exception', function () use ($message) {
             $message->messageOne('testMessage', '123');
         });
     }

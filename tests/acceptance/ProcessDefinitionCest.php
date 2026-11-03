@@ -29,7 +29,7 @@ class ProcessDefinitionCest extends ApiCest
      */
     public function getDefinitionByKey(ProcessDefinition $definition, AcceptanceTester $I)
     {
-        $I->expectException('borodulin\camunda\Exception', function () use ($definition) {
+        $I->expectThrowable('borodulin\camunda\Exception', function () use ($definition) {
             $definition->getDefinitionByKey('demo1');
         });
         $this->deploy('demo1');
@@ -64,7 +64,7 @@ class ProcessDefinitionCest extends ApiCest
     public function submitStartForm(ProcessDefinition $definition, ProcessInstance $instance, AcceptanceTester $I)
     {
         $this->deploy('demo6');
-        $I->expectException('borodulin\camunda\Exception', function () use ($definition){
+        $I->expectThrowable('borodulin\camunda\Exception', function () use ($definition){
             $definition->submitStartFormByKey('demo6', [
                 'bk11' => 'qwe'
             ]);

@@ -11,7 +11,7 @@ return [
     'components' => [
         'camunda' => [
             'class' => \borodulin\camunda\CamundaApi::class,
-            'apiUrl' => 'http://camunda:8080/engine-rest'
+            'apiUrl' => getenv('CAMUNDA_API_URL') ?: 'http://localhost:8080/engine-rest',
         ],
     ],
 ];
