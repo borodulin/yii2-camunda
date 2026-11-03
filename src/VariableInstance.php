@@ -26,7 +26,7 @@ class VariableInstance extends Module
     public function getBinary($id)
     {
         return $this->getApi()
-            ->execute("variable-instance/{$id}/data");
+            ->execute("variable-instance/{$this->encodePath($id)}/data");
     }
 
     /**
@@ -69,7 +69,7 @@ class VariableInstance extends Module
     public function get($id)
     {
         return $this->getApi()
-            ->execute("variable-instance/{$id}");
+            ->execute("variable-instance/{$this->encodePath($id)}");
     }
 
     /**

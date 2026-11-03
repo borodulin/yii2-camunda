@@ -25,7 +25,7 @@ class ProcessDefinition extends Module
     public function getStatisticsById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/statistics");
+            ->execute("process-definition/{$this->encodePath($id)}/statistics");
     }
 
     /**
@@ -38,7 +38,7 @@ class ProcessDefinition extends Module
     public function getStatisticsByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/statistics");
+            ->execute("process-definition/key/{$this->encodePath($key)}/statistics");
     }
 
     /**
@@ -52,7 +52,7 @@ class ProcessDefinition extends Module
     public function getDiagramById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/diagram");
+            ->execute("process-definition/{$this->encodePath($id)}/diagram");
     }
 
     /**
@@ -65,7 +65,7 @@ class ProcessDefinition extends Module
     public function getDiagramByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/diagram");
+            ->execute("process-definition/key/{$this->encodePath($key)}/diagram");
     }
 
     /**
@@ -79,7 +79,7 @@ class ProcessDefinition extends Module
     public function getStartFormVariablesById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/form-variables");
+            ->execute("process-definition/{$this->encodePath($id)}/form-variables");
     }
 
     /**
@@ -92,7 +92,7 @@ class ProcessDefinition extends Module
     public function getStartFormVariablesByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/form-variables");
+            ->execute("process-definition/key/{$this->encodePath($key)}/form-variables");
     }
 
     /**
@@ -135,7 +135,7 @@ class ProcessDefinition extends Module
     public function getRenderedStartFormById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/rendered-form");
+            ->execute("process-definition/{$this->encodePath($id)}/rendered-form");
     }
 
     /**
@@ -148,7 +148,7 @@ class ProcessDefinition extends Module
     public function getRenderedStartFormByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/rendered-form");
+            ->execute("process-definition/key/{$this->encodePath($key)}/rendered-form");
     }
 
     /**
@@ -162,7 +162,7 @@ class ProcessDefinition extends Module
     public function getStartFormKeyById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/startForm");
+            ->execute("process-definition/{$this->encodePath($id)}/startForm");
     }
 
     /**
@@ -175,7 +175,7 @@ class ProcessDefinition extends Module
     public function getStartFormKeyByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/startForm");
+            ->execute("process-definition/key/{$this->encodePath($key)}/startForm");
     }
 
     /**
@@ -202,7 +202,7 @@ class ProcessDefinition extends Module
     public function getXmlById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id/xml");
+            ->execute("process-definition/{$this->encodePath($id)}/xml");
     }
 
     /**
@@ -215,7 +215,7 @@ class ProcessDefinition extends Module
     public function getXmlByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key/xml");
+            ->execute("process-definition/key/{$this->encodePath($key)}/xml");
     }
 
     /**
@@ -229,7 +229,7 @@ class ProcessDefinition extends Module
     public function getDefinitionById($id)
     {
         return $this->getApi()
-            ->execute("process-definition/$id");
+            ->execute("process-definition/{$this->encodePath($id)}");
     }
 
     /**
@@ -242,7 +242,7 @@ class ProcessDefinition extends Module
     public function getDefinitionByKey($key)
     {
         return $this->getApi()
-            ->execute("process-definition/key/$key");
+            ->execute("process-definition/key/{$this->encodePath($key)}");
     }
 
     /**
@@ -258,7 +258,7 @@ class ProcessDefinition extends Module
     {
         return $this->getApi()
             ->postJson($json)
-            ->execute("process-definition/$id/start");
+            ->execute("process-definition/{$this->encodePath($id)}/start");
     }
 
     /**
@@ -273,7 +273,7 @@ class ProcessDefinition extends Module
     {
         return $this->getApi()
             ->postJson($json)
-            ->execute("process-definition/key/$key/start");
+            ->execute("process-definition/key/{$this->encodePath($key)}/start");
     }
 
     /**
@@ -293,7 +293,7 @@ class ProcessDefinition extends Module
                 'variables' => $this::translateVariables($variables),
                 'businessKey' => $businessKey
             ])
-            ->execute("process-definition/$id/submit-form");
+            ->execute("process-definition/{$this->encodePath($id)}/submit-form");
     }
 
     /**
@@ -312,7 +312,7 @@ class ProcessDefinition extends Module
                 'variables' => $this::translateVariables($variables),
                 'businessKey' => $businessKey
             ])
-            ->execute("process-definition/key/$key/submit-form");
+            ->execute("process-definition/key/{$this->encodePath($key)}/submit-form");
     }
 
     /**
@@ -335,7 +335,7 @@ class ProcessDefinition extends Module
                 'executionDate' => $this->formatDate($executionDate),
             ])
             ->methodPut()
-            ->execute("process-definition/$id/suspended");
+            ->execute("process-definition/{$this->encodePath($id)}/suspended");
     }
 
     /**
@@ -357,6 +357,6 @@ class ProcessDefinition extends Module
                 'executionDate' => $this->formatDate($executionDate),
             ])
             ->methodPut()
-            ->execute("process-definition/key/$key/suspended");
+            ->execute("process-definition/key/{$this->encodePath($key)}/suspended");
     }
 }

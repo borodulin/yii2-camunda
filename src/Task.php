@@ -25,7 +25,7 @@ class Task extends Module
     public function get($id)
     {
         return $this->getApi()
-            ->execute("task/{$id}");
+            ->execute("task/{$this->encodePath($id)}");
     }
 
     /**
@@ -107,7 +107,7 @@ class Task extends Module
     public function getFormKey($id)
     {
         return $this->getApi()
-            ->execute("task/{$id}/form");
+            ->execute("task/{$this->encodePath($id)}/form");
     }
 
     /**
@@ -124,7 +124,7 @@ class Task extends Module
     {
         return $this->getApi()
             ->postJson(['userId' => $userId])
-            ->execute("task/{$id}/claim");
+            ->execute("task/{$this->encodePath($id)}/claim");
     }
 
     /**
@@ -138,7 +138,7 @@ class Task extends Module
     {
         return $this->getApi()
             ->setPostData()
-            ->execute("task/{$id}/unclaim");
+            ->execute("task/{$this->encodePath($id)}/unclaim");
     }
 
     /**
@@ -154,7 +154,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'variables' => $this::translateVariables($variables)
         ])
-            ->execute("task/{$id}/complete");
+            ->execute("task/{$this->encodePath($id)}/complete");
     }
 
     /**
@@ -174,7 +174,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'variables' => $this::translateVariables($variables)
         ])
-            ->execute("task/{$id}/submit-form");
+            ->execute("task/{$this->encodePath($id)}/submit-form");
     }
 
 
@@ -191,7 +191,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'variables' => $this::translateVariables($variables)
         ])
-            ->execute("task/{$id}/resolve");
+            ->execute("task/{$this->encodePath($id)}/resolve");
     }
 
     /**
@@ -208,7 +208,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'userId' => $userId
         ])
-            ->execute("task/{$id}/assignee");
+            ->execute("task/{$this->encodePath($id)}/assignee");
     }
 
     /**
@@ -224,7 +224,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'userId' => $userId
         ])
-            ->execute("task/{$id}/delegate");
+            ->execute("task/{$this->encodePath($id)}/delegate");
     }
 
     /**
@@ -237,7 +237,7 @@ class Task extends Module
     public function getRenderedForm($id)
     {
         return $this->getApi()
-            ->execute("task/{$id}/rendered-form");
+            ->execute("task/{$this->encodePath($id)}/rendered-form");
     }
 
     /**
@@ -254,7 +254,7 @@ class Task extends Module
     public function getFormVariables($id, $variableNames = null, $deserializeValues = false)
     {
         return $this->getApi()
-            ->execute("task/{$id}/form-variables", [
+            ->execute("task/{$this->encodePath($id)}/form-variables", [
                 'variableNames' => $variableNames,
                 'deserializeValues' => $deserializeValues,
             ]);
@@ -287,7 +287,7 @@ class Task extends Module
         return $this->getApi()
             ->postJson($params)
             ->methodPut()
-            ->execute("task/{$id}/");
+            ->execute("task/{$this->encodePath($id)}/");
     }
 
 
@@ -301,7 +301,7 @@ class Task extends Module
     public function getComments($id)
     {
         return $this->getApi()
-            ->execute("task/{$id}/comment");
+            ->execute("task/{$this->encodePath($id)}/comment");
     }
 
     /**
@@ -315,7 +315,7 @@ class Task extends Module
     public function getSingleComment($id, $commentId)
     {
         return $this->getApi()
-            ->execute("task/{$id}/comment/{$commentId}");
+            ->execute("task/{$this->encodePath($id)}/comment/{$this->encodePath($commentId)}");
     }
 
     /**
@@ -331,7 +331,7 @@ class Task extends Module
         return $this->getApi()->postJson([
             'message' => $message
         ])
-            ->execute("task/{$id}/comment/create");
+            ->execute("task/{$this->encodePath($id)}/comment/create");
     }
 
     /**
@@ -348,7 +348,7 @@ class Task extends Module
     public function getVariable($id, $varName, $deserializeValue = false)
     {
         return $this->getApi()
-            ->execute("task/{$id}/variables/{$varName}", [
+            ->execute("task/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}", [
                 'deserializeValue' => $deserializeValue
             ]);
     }
@@ -366,7 +366,7 @@ class Task extends Module
     public function getVariableBinary($id, $varName)
     {
         return $this->getApi()
-            ->execute("task/{$id}/variables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -381,7 +381,7 @@ class Task extends Module
     public function getVariables($id, $deserializeValues = false)
     {
         return $this->getApi()
-            ->execute("task/{$id}/variables", [
+            ->execute("task/{$this->encodePath($id)}/variables", [
                 'deserializeValues' => $deserializeValues
             ]);
     }
@@ -404,7 +404,7 @@ class Task extends Module
             'modifications' => $this::translateVariables($modifications),
             'deletions' => $deletions
         ])
-            ->execute("task/{$id}/variables");
+            ->execute("task/{$this->encodePath($id)}/variables");
     }
 
     /**
@@ -430,7 +430,7 @@ class Task extends Module
             'valueInfo' => $valueInfo,
         ])
             ->methodPut()
-            ->execute("task/{$id}/variables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -451,7 +451,7 @@ class Task extends Module
             'data' => $data,
             'valueType' => $valueType,
         ])
-            ->execute("task/{$id}/variables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -467,7 +467,7 @@ class Task extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute("task/{$id}/variables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -482,7 +482,7 @@ class Task extends Module
     public function getLocalVariable($id, $varName, $deserializeValue = false)
     {
         return $this->getApi()
-            ->execute("task/{$id}/localVariables/{$varName}", [
+            ->execute("task/{$this->encodePath($id)}/localVariables/{$this->encodePath($varName)}", [
                 'deserializeValue' => $deserializeValue
             ]);
     }
@@ -498,7 +498,7 @@ class Task extends Module
     public function getLocalVariableBinary($id, $varName)
     {
         return $this->getApi()
-            ->execute("task/{$id}/localVariables/{$varName}/data");
+            ->execute("task/{$this->encodePath($id)}/localVariables/{$this->encodePath($varName)}/data");
     }
 
     /**
@@ -512,7 +512,7 @@ class Task extends Module
     public function getLocalVariables($id, $deserializeValues = false)
     {
         return $this->getApi()
-            ->execute("task/{$id}/localVariables", [
+            ->execute("task/{$this->encodePath($id)}/localVariables", [
                 'deserializeValues' => $deserializeValues
             ]);
     }
@@ -533,7 +533,7 @@ class Task extends Module
             'modifications' => $this::translateVariables($modifications),
             'deletions' => $deletions
         ])
-            ->execute("task/{$id}/localVariables");
+            ->execute("task/{$this->encodePath($id)}/localVariables");
     }
 
     /**
@@ -556,7 +556,7 @@ class Task extends Module
             'valueInfo' => $valueInfo,
         ])
             ->methodPut()
-            ->execute("task/{$id}/localVariables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/localVariables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -575,7 +575,7 @@ class Task extends Module
             'data' => $data,
             'valueType' => $valueType,
         ])
-            ->execute("task/{$id}/localVariables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/localVariables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -590,6 +590,6 @@ class Task extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute("task/{$id}/localVariables/{$varName}");
+            ->execute("task/{$this->encodePath($id)}/localVariables/{$this->encodePath($varName)}");
     }
 }

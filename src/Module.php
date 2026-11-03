@@ -47,6 +47,16 @@ abstract class Module extends BaseObject
     }
 
     /**
+     * Encodes a value used as a REST path segment, so ids cannot alter the endpoint (e.g. "../").
+     * @param string|int $value
+     * @return string
+     */
+    protected function encodePath($value)
+    {
+        return rawurlencode((string)$value);
+    }
+
+    /**
      * @param $variables
      * @return array|null
      */

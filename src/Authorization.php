@@ -58,7 +58,7 @@ class Authorization extends Module
     public function get($id)
     {
         return $this->getApi()
-            ->execute("authorization/{$id}");
+            ->execute("authorization/{$this->encodePath($id)}");
     }
 
     /**
@@ -119,7 +119,7 @@ class Authorization extends Module
         return $this->getApi()
             ->postJson($body)
             ->methodPut()
-            ->execute("authorization/{$id}");
+            ->execute("authorization/{$this->encodePath($id)}");
     }
 
     /**
@@ -132,6 +132,6 @@ class Authorization extends Module
     {
         $this->getApi()
             ->methodDelete()
-            ->execute("authorization/{$id}");
+            ->execute("authorization/{$this->encodePath($id)}");
     }
 }

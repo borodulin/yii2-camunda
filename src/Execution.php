@@ -53,7 +53,7 @@ class Execution extends Module
     public function get($id)
     {
         return $this->getApi()
-            ->execute("execution/{$id}");
+            ->execute("execution/{$this->encodePath($id)}");
     }
 
     /**
@@ -107,6 +107,6 @@ class Execution extends Module
             ->postJson([
                 'variables' => self::translateVariables($variables)
             ])
-            ->execute("execution/{$id}/signal");
+            ->execute("execution/{$this->encodePath($id)}/signal");
     }
 }

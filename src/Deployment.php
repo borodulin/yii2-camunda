@@ -61,7 +61,7 @@ class Deployment extends Module
     public function getDeployment($id)
     {
         return $this->getApi()
-            ->execute('deployment/' . $id);
+            ->execute('deployment/' . $this->encodePath($id));
     }
 
     /**
@@ -76,7 +76,7 @@ class Deployment extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute('deployment/' . $id, [
+            ->execute('deployment/' . $this->encodePath($id), [
                 'cascade' => $cascade ? 'true' : 'false',
                 'skipCustomListeners' => $skipCustomListeners ? 'true' : 'false',
                 'skipIoMappings' => $skipIoMappings ? 'true' : 'false',
@@ -92,7 +92,7 @@ class Deployment extends Module
     public function getDeploymentResources($id)
     {
         return $this->getApi()
-            ->execute("deployment/$id/resources");
+            ->execute("deployment/{$this->encodePath($id)}/resources");
     }
 
     /**
@@ -105,7 +105,7 @@ class Deployment extends Module
     public function getResource($id, $resourceId)
     {
         return $this->getApi()
-            ->execute("deployment/$id/resources/$resourceId");
+            ->execute("deployment/{$this->encodePath($id)}/resources/{$this->encodePath($resourceId)}");
     }
 
     /**

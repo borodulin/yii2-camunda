@@ -25,7 +25,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute("process-instance/$id");
+            ->execute("process-instance/{$this->encodePath($id)}");
     }
 
     /**
@@ -38,7 +38,7 @@ class ProcessInstance extends Module
     public function getActivityInstance($id)
     {
         return $this->getApi()
-            ->execute("process-instance/$id/activity-instances");
+            ->execute("process-instance/{$this->encodePath($id)}/activity-instances");
     }
 
 
@@ -82,7 +82,7 @@ class ProcessInstance extends Module
     public function getInstance($id)
     {
         return $this->getApi()
-            ->execute("process-instance/$id");
+            ->execute("process-instance/{$this->encodePath($id)}");
     }
 
     /**
@@ -105,7 +105,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->postJson($params)
-            ->execute("process-instance/$id/modification");
+            ->execute("process-instance/{$this->encodePath($id)}/modification");
     }
 
     /**
@@ -154,7 +154,7 @@ class ProcessInstance extends Module
             'suspended' => $suspended
         ])
             ->methodPut()
-            ->execute("process-instance/$id/suspended");
+            ->execute("process-instance/{$this->encodePath($id)}/suspended");
     }
 
     /**
@@ -205,7 +205,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute("process-instance/{$id}/variables/{$varName}");
+            ->execute("process-instance/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -222,7 +222,7 @@ class ProcessInstance extends Module
         return $this->getApi()->postJson([
             'data' => $data
         ])
-            ->execute("process-instance/{$id}/variables/{$varName}/data");
+            ->execute("process-instance/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}/data");
     }
 
     /**
@@ -237,7 +237,7 @@ class ProcessInstance extends Module
     public function getVariable($id, $varName, $deserializeValue = false)
     {
         return $this->getApi()
-            ->execute("process-instance/{$id}/variables/{$varName}", [
+            ->execute("process-instance/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}", [
                 'deserializeValue' => $deserializeValue ? 'true' : 'false',
             ]);
     }
@@ -253,7 +253,7 @@ class ProcessInstance extends Module
     public function getVariables($id, $deserializeValues = false)
     {
         return $this->getApi()
-            ->execute("process-instance/$id/variables", [
+            ->execute("process-instance/{$this->encodePath($id)}/variables", [
                 'deserializeValues' => $deserializeValues ? 'true' : 'false',
             ]);
     }
@@ -274,7 +274,7 @@ class ProcessInstance extends Module
             'modifications' => $this::translateVariables($modifications),
             'deletions' => $deletions
         ])
-            ->execute("process-instance/{$id}/variables");
+            ->execute("process-instance/{$this->encodePath($id)}/variables");
     }
 
     /**
@@ -297,7 +297,7 @@ class ProcessInstance extends Module
             'valueInfo' => $valueInfo
         ])
             ->methodPut()
-            ->execute("process-instance/$id/variables/$varName");
+            ->execute("process-instance/{$this->encodePath($id)}/variables/{$this->encodePath($varName)}");
     }
 
     /**
@@ -338,7 +338,7 @@ class ProcessInstance extends Module
     public function history($id)
     {
         return $this->getApi()
-            ->execute("history/process-instance/{$id}");
+            ->execute("history/process-instance/{$this->encodePath($id)}");
     }
 
     /**
@@ -389,7 +389,7 @@ class ProcessInstance extends Module
     {
         return $this->getApi()
             ->methodDelete()
-            ->execute("history/process-instance/{$id}");
+            ->execute("history/process-instance/{$this->encodePath($id)}");
     }
 
     /**
